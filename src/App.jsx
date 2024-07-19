@@ -12,20 +12,14 @@ import Products from "./routes/products/Products";
 import Users from "./routes/users/Users";
 import Initial from "./routes/initial/Initial";
 import NotFound from "./routes/not-found/NotFound";
+import Dashboard from "./routes/dashboard/Dashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Initial />}>
       <Route path="home" element={<Home />} />
-      <Route
-        path="Orders"
-        element={<Orders />}
-        // loader={({ request }) =>
-        //   fetch("/api/dashboard.json", {
-        //     signal: request.signal,
-        //   })
-        // }
-      />
+      <Route path="dashboard" element={<Dashboard />} />
+      <Route path="orders" element={<Orders />} />
       <Route path="products" element={<Products />} />
       <Route path="users" element={<Users />} />
 
