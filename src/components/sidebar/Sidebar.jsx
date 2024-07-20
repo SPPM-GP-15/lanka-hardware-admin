@@ -33,6 +33,13 @@ function Sidebar() {
                 <HomeIcon className="w-6 h-6 mr-3" />
                 <span>Dashboard</span>
               </Link>
+              <Link
+                to="/post-product"
+                className={getLinkClasses("/post-product")}
+              >
+                <HomeIcon className="w-6 h-6 mr-3" />
+                <span>Add Product</span>
+              </Link>
               <Link to="/orders" className={getLinkClasses("/orders")}>
                 <AdjustmentsVerticalIcon className="w-6 h-6 mr-3" />
                 <span>Orders</span>

@@ -13,6 +13,7 @@ import Users from "./routes/users/Users";
 import Initial from "./routes/initial/Initial";
 import NotFound from "./routes/not-found/NotFound";
 import Dashboard from "./routes/dashboard/Dashboard";
+import PostProducts from "./routes/post-products/PostProduct";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route path="orders" element={<Orders />} />
       <Route path="products" element={<Products />} />
       <Route path="users" element={<Users />} />
+      <Route path="post-product" element={<PostProducts />} />
 
       <Route path="*" element={<NotFound />} />
 
