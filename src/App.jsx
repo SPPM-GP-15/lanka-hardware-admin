@@ -16,7 +16,7 @@ import Dashboard from "./routes/dashboard/Dashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Initial />}>
+    <Route path="/" element={<Login />}>
       <Route path="home" element={<Home />} />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="orders" element={<Orders />} />
