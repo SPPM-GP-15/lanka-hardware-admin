@@ -4,10 +4,11 @@ import Sidebar from "../../components/sidebar/Sidebar";
 
 const Initial = () => {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Initial Component</h1>
+    <div className="flex">
       <Sidebar />
-      <Outlet />
+      <div className="ml-[250px] p-[20px] w-[calc(100%-250px)] overflow-y-auto">
+        <Outlet />
+      </div>
     </div>
   );
 };
