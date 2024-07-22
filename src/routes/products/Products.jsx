@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Product from "../../components/product/Product";
 
 function Products() {
-  return <div>Products</div>;
+  useEffect(() => {
+    document.title = "Products | Lanka Hardwarehub";
+  }, []);
+
+  return (
+    <div>
+      <Product />
+    </div>
+  );
 }
 
 export default Products;

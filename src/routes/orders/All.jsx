@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 function All() {
+  useEffect(() => {
+    document.title = "All Orders | Lanka Hardwarehub";
+  }, []);
   return (
     <div class="py-8">
       <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
         <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
           <table class="w-full border border-collapse table-auto">
             <thead class="">
-              <tr class="text-base font-bold text-left bg-gray-50">
+              <tr class="text-base font-bold bg-gray-50 text-center">
                 <th class="px-4 py-3 border-b-2 ">User</th>
                 <th class="px-4 py-3 border-b-2 ">Location</th>
                 <th class="px-4 py-3 border-b-2 ">Qty</th>
@@ -17,7 +20,7 @@ function All() {
               </tr>
             </thead>
             <tbody class="text-sm font-normal  bg-white">
-              <tr class="py-10 border-b border-gray-200 hover:bg-gray-100 cursor-pointer text-gray-700 hover:text-black">
+              <tr class="py-10 border-b border-gray-200 hover:bg-gray-100 cursor-pointer text-gray-700 hover:text-black text-center">
                 <td class="px-4 py-4">Ahmed Anwer</td>
                 <td class="px-4 py-4">Kurunegela</td>
                 <td class="px-4 py-4">10</td>

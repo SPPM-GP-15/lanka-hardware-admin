@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const PostProducts = () => {
+  useEffect(() => {
+    document.title = "Add Product | Lanka Hardwarehub";
+  }, []);
   return (
     <div className="flex items-center flex-col">
       <div className="py-4 px-12 rounded-2xl bg-slate-400">

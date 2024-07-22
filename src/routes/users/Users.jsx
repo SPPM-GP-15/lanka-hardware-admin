@@ -1,5 +1,5 @@
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import UserCard from "../../components/userCard/UserCard";
@@ -42,12 +42,17 @@ const User = () => {
     });
   };
 
+  useEffect(() => {
+    document.title = "Users | Lanka Hardwarehub";
+  }, []);
+
   return (
     <div className="h-screen px-4 pb-24 overflow-auto md:px-6 p-6">
       <div className="flex items-center space-x-4">
         <div className="text-2xl font-bold text-gray-600 mt-2 mb-5">
           Registered Users
         </div>
+        <div className="mb-1 ml-2 text-xs text-gray-500 ">123 users found</div>
       </div>
 
       <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">

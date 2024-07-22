@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function NotFound() {
+  useEffect(() => {
+    document.title = "Page Not Found | Lanka Hardwarehub";
+  }, []);
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center">
       <img

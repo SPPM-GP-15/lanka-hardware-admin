@@ -1,11 +1,16 @@
-import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, NavLink, Outlet } from "react-router-dom";
 
 const Orders = () => {
+  useEffect(() => {
+    document.title = "Orders | Lanka Hardwarehub";
+  }, []);
+
   return (
     <div className="container px-4 mx-auto sm:px-8">
       <div className="flex items-center space-x-4 mt-10">
         <div className="text-2xl font-bold text-gray-700 mb-5">Orders</div>
+        <div className="mb-3 ml-2 text-xs text-gray-500 ">123 orders found</div>
       </div>
 
       <div className="flex gap-4">

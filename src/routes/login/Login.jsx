@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useEffect } from "react";
 
 const Login = () => {
+  useEffect(() => {
+    document.title = "Login | Lanka Hardwarehub";
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-3xl font-bold mb-2 text-center">Welcome back</h2>
-        <p className="text-xl mb-6 text-center text-gray-600">Lanka Hardwarehub</p>
+        <p className="text-xl mb-6 text-center text-gray-600">
+          Lanka Hardwarehub
+        </p>
         <form>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
               Username
             </label>
             <input
@@ -19,7 +28,10 @@ const Login = () => {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
