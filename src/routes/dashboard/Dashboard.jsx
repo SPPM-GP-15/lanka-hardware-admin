@@ -8,7 +8,7 @@ import { IoMdCart } from "react-icons/io";
 
 import RecentOrders from "../../components/dashboardCards/RecentOrders";
 import TopSummary from "../../components/dashboardCards/TopSummary";
-import NewUsers from "../../components/dashboardCards/Newusers";
+import NewUsers from "../../components/dashboardCards/NewUsers";
 import RecentProducts from "../../components/dashboardCards/RecentProducts";
 import NewOrderAlert from "../../components/dashboardCards/NewOrderAlert";
 
