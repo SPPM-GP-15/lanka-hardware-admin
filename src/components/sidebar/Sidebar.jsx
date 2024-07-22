@@ -3,6 +3,9 @@ import {
   HomeIcon,
   ShoppingBagIcon,
   AdjustmentsVerticalIcon,
+  UserIcon,
+  ArchiveBoxIcon,
+  ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useLocation } from "react-router-dom";
 
@@ -11,8 +14,9 @@ function Sidebar() {
   const currentUrl = location.pathname;
 
   const getLinkClasses = (path) => {
+    const isActive = currentUrl === path || currentUrl.startsWith(path);
     return `flex items-center px-6 py-2 m-4 text-sm font-medium ${
-      currentUrl === path
+      isActive
         ? "text-white bg-gray-800"
         : "text-gray-400 hover:text-white hover:bg-gray-600"
     } rounded-md`;
@@ -25,6 +29,7 @@ function Sidebar() {
           <div>
             <div className="flex items-center justify-start pt-6 ml-8">
               <Link to="/" className="text-2xl font-bold text-white">
+                <img src="../../assets/icon.png" width={50} height={50} />
                 Lanka Hardware
               </Link>
             </div>
@@ -37,15 +42,22 @@ function Sidebar() {
                 to="/post-product"
                 className={getLinkClasses("/post-product")}
               >
-                <HomeIcon className="w-6 h-6 mr-3" />
+                <ShoppingCartIcon className="w-6 h-6 mr-3" />
                 <span>Add Product</span>
               </Link>
-              <Link to="/orders" className={getLinkClasses("/orders")}>
+              <Link
+                to="/stock-update"
+                className={getLinkClasses("/stock-update")}
+              >
+                <ArchiveBoxIcon className="w-6 h-6 mr-3" />
+                <span>Update Stock</span>
+              </Link>
+              <Link to="/orders/all" className={getLinkClasses("/orders")}>
                 <AdjustmentsVerticalIcon className="w-6 h-6 mr-3" />
                 <span>Orders</span>
               </Link>
               <Link to="/users" className={getLinkClasses("/users")}>
-                <ShoppingBagIcon className="w-6 h-6 mr-3" />
+                <UserIcon className="w-6 h-6 mr-3" />
                 <span>Users</span>
               </Link>
             </nav>

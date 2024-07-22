@@ -14,23 +14,31 @@ import Initial from "./routes/initial/Initial";
 import NotFound from "./routes/not-found/NotFound";
 import Dashboard from "./routes/dashboard/Dashboard";
 import PostProducts from "./routes/post-products/PostProduct";
+import Stock from "./routes/stock/Stock";
+import All from "./routes/orders/All";
+import New from "./routes/orders/New";
+import Pending from "./routes/orders/Pending";
+import Completed from "./routes/orders/Completed";
+import Cancel from "./routes/orders/Cancel";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Login />}>
+    <Route path="/" element={<Initial />}>
       <Route path="home" element={<Home />} />
       <Route path="dashboard" element={<Dashboard />} />
-      <Route path="orders" element={<Orders />} />
+      <Route path="orders" element={<Orders />}>
+        <Route path="all" element={<All />} />
+        <Route path="new" element={<New />} />
+        <Route path="pending" element={<Pending />} />
+        <Route path="completed" element={<Completed />} />
+        <Route path="cancel" element={<Cancel />} />
+      </Route>
       <Route path="products" element={<Products />} />
       <Route path="users" element={<Users />} />
       <Route path="post-product" element={<PostProducts />} />
+      <Route path="stock-update" element={<Stock />} />
 
       <Route path="*" element={<NotFound />} />
-
-      {/* <Route element={<AuthLayout />}>
-        <Route path="login" element={<Login />} loader={redirectIfUser} />
-        <Route path="logout" action={logoutUser} />
-      </Route> */}
     </Route>
   )
 );

@@ -1,62 +1,62 @@
-import React, { useState } from 'react';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
+import React, { useState } from "react";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import UserCard from "../../components/userCard/UserCard";
+import { MdEmail } from "react-icons/md";
 
 const User = () => {
   const [users, setUsers] = useState([
     {
       id: 1,
-      username: 'john_doe',
-      address: '123 Main St',
-      phone: '555-1234',
+      username: "john_doe",
+      address: "123 Main St",
+      phone: "555-1234",
       totalOrders: 5,
     },
     {
       id: 2,
-      username: 'jane_doe',
-      address: '456 Elm St',
-      phone: '555-5678',
+      username: "jane_doe",
+      address: "456 Elm St",
+      phone: "555-5678",
       totalOrders: 3,
     },
   ]);
 
   const handleRemove = (userId) => {
     confirmAlert({
-      title: 'Confirm to delete',
-      message: 'Are you sure you want to delete this user?',
+      title: "Confirm to delete",
+      message: "Are you sure you want to delete this user?",
       buttons: [
         {
-          label: 'Yes',
+          label: "Yes",
           onClick: () => {
-            setUsers(users.filter(user => user.id !== userId));
-          }
+            setUsers(users.filter((user) => user.id !== userId));
+          },
         },
         {
-          label: 'No',
-          onClick: () => {}
-        }
-      ]
+          label: "No",
+          onClick: () => {},
+        },
+      ],
     });
   };
 
   return (
-    <div className="min-h-screen p-8 bg-gray-100">
-      <h2 className="text-3xl font-bold mb-6">User Management</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {users.map(user => (
-          <div key={user.id} className="bg-white p-4 rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold mb-2">{user.username}</h3>
-            <p className="mb-2"><strong>Address:</strong> {user.address}</p>
-            <p className="mb-2"><strong>Phone:</strong> {user.phone}</p>
-            <p className="mb-4"><strong>Total Orders:</strong> {user.totalOrders}</p>
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => handleRemove(user.id)}
-            >
-              Remove
-            </button>
-          </div>
-        ))}
+    <div className="h-screen px-4 pb-24 overflow-auto md:px-6 p-6">
+      <div className="flex items-center space-x-4">
+        <div className="text-2xl font-bold text-gray-600 mt-2 mb-5">
+          Registered Users
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
+        <UserCard />
+        <UserCard />
+        <UserCard />
+        <UserCard />
+        <UserCard />
+        <UserCard />
       </div>
     </div>
   );
