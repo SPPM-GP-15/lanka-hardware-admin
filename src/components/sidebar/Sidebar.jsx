@@ -8,6 +8,7 @@ import {
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useLocation } from "react-router-dom";
+import { AiFillProduct } from "react-icons/ai";
 
 function Sidebar() {
   const location = useLocation();
@@ -28,7 +29,13 @@ function Sidebar() {
         <div className="h-full flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-start pt-6 ml-8">
-              <Link to="/" className="text-2xl font-bold text-white">
+              <Link
+                to="/"
+                className="text-2xl font-bold text-white"
+                onClick={() => {
+                  document.title = "Lanka Hardware Dashboard";
+                }}
+              >
                 <img src="../../assets/icon.png" width={50} height={50} />
                 Lanka Hardware
               </Link>
@@ -37,6 +44,10 @@ function Sidebar() {
               <Link to="/dashboard" className={getLinkClasses("/dashboard")}>
                 <HomeIcon className="w-6 h-6 mr-3" />
                 <span>Dashboard</span>
+              </Link>
+              <Link to="/products" className={getLinkClasses("/products")}>
+                <AiFillProduct className="w-6 h-6 mr-3" />
+                <span>All Products</span>
               </Link>
               <Link
                 to="/post-product"
