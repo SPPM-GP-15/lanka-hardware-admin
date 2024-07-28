@@ -1,12 +1,16 @@
-import React from "react";
-import DashboardCard from "../../components/dashboardCard/DashboardCard";
+import React, { useEffect, useState } from "react";
+import DashboardCard from "../../components/dashboardCards/DashboardCard";
 import { BiSolidBadgeDollar } from "react-icons/bi";
 import { FaArrowUpShortWide } from "react-icons/fa6";
 import { FaArrowDownWideShort } from "react-icons/fa6";
 import { FaUsers } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
-import barChart from "../../assets/barchart.jpeg";
-import pieChart from "../../assets/piechart.png";
+
+import RecentOrders from "../../components/dashboardCards/RecentOrders";
+import TopSummary from "../../components/dashboardCards/TopSummary";
+import NewUsers from "../../components/dashboardCards/NewUsers";
+import RecentProducts from "../../components/dashboardCards/RecentProducts";
+import NewOrderAlert from "../../components/dashboardCards/NewOrderAlert";
 
 const cardDetails = [
   {
@@ -71,6 +75,10 @@ const cardDetails = [
   },
 ];
 const Dashboard = () => {
+  useEffect(() => {
+    document.title = "Dashboard | Lanka Hardwarehub";
+  }, []);
+
   const cardDetailsSets = [
     [cardDetails[0]],
     [cardDetails[1]],
@@ -79,8 +87,37 @@ const Dashboard = () => {
     [cardDetails[4]],
     [cardDetails[5]],
   ];
+
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleClose = () => {
+    setIsVisible(false);
+  };
+
   return (
-    <div>
+    <div className="h-screen px-4 pb-24 overflow-auto md:px-6 p-6">
+      <NewOrderAlert isVisible={isVisible} handleClose={handleClose} />
+
+      <div className="flex items-center justify-between  sm:space-x-12 ">
+        <div className={`${isVisible ? "mt-9" : "mt-4"}`}>
+          <h1 className="text-4xl font-semibold text-gray-800">
+            Welcome to Admin Dashboard
+          </h1>
+          <h2 className="text-gray-400 text-md">
+            Here's what's happening with our hardware in summary.
+          </h2>
+        </div>
+      </div>
+      <TopSummary />
+
+      <div className="flex flex-col  w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row mt-14">
+        <div className="flex w-full space-x-4">
+          <RecentOrders />
+          <NewUsers />
+        </div>
+      </div>
+      <RecentProducts />
+
       <div className="p-4 placeholder:">
         <div className="flex flex-wrap gap-20 justify-center items-center">
           {cardDetailsSets.map((cardDetails, index) => (
@@ -88,30 +125,6 @@ const Dashboard = () => {
               <DashboardCard cardDetails={cardDetails} />
             </div>
           ))}
-        </div>
-      </div>
-      <div>
-        <div className="flex flex-wrap gap-32 mt-8 justify-center items-center mb-10">
-          <div className="w-1/2 bg-white shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl">
-            <h2 className="text-xl font-semibold mb-4">Bar Chart</h2>
-            <div className=" rounded-lg flex items-center justify-center">
-              <img
-                src={barChart}
-                alt="Bar Chart"
-                className="w-[350px] h-full object-cover rounded-lg"
-              />
-            </div>
-          </div>
-          <div className="w-1/4 bg-white shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl">
-            <h2 className="text-xl font-semibold mb-4">Pie Chart</h2>
-            <div className="  rounded-lg flex items-center justify-center">
-              <img
-                src={pieChart}
-                alt="Pie Chart"
-                className="w--[200px] h-[200px] object-cover rounded-lg"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>
