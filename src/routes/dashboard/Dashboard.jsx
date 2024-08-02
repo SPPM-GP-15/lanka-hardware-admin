@@ -24,6 +24,17 @@ const cardDetails = [
     bottomIconColor: "text-green-500",
   },
   {
+    id: 1,
+    title: "BUDGET",
+    value: "$24K",
+    topIcon: BiSolidBadgeDollar,
+    bottomIcon: FaArrowUpShortWide,
+    desc: "Since last month",
+    topIconColor: "text-red-500",
+    bottomIconColor: "text-green-500",
+  },
+
+  {
     id: 2,
     title: "TOTAL CUSTOMERS",
     value: "1.6K",
