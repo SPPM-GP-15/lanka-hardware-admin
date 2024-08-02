@@ -18,6 +18,14 @@ const User = () => {
       phone: '555-5678',
       totalOrders: 3,
     },
+    
+    {
+      id: 3,
+      username: 'jane_doe',
+      address: '456 Elm St',
+      phone: '555-5678',
+      totalOrders: 3,
+    }
   ]);
 
   const handleRemove = (userId) => {
