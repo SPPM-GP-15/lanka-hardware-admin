@@ -13,12 +13,13 @@ const Product = () => {
   const [productDetails, setProductDetails] = useState({
     name: '',
     description: '',
-    imageUrl: '',
+    imageUrl: '', // Make sure this is correctly named
     price: 0,
     discountPercentage: 0,
     category: '',
     manufacturer: ''
   });
+  
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -127,12 +128,14 @@ const handleProductClick = async (productId) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log(`Name: ${name}, Value: ${value}`); // Debugging log
     setProductDetails(prevState => ({
       ...prevState,
       [name]: value
     }));
   };
-
+  
+  
   const handleStockQuantityChange = (amount) => {
     setStockQuantity(prevQuantity => {
       const newQuantity = Math.max(0, prevQuantity + amount);
@@ -162,10 +165,16 @@ const handleProductClick = async (productId) => {
 
   const handleUpdateProduct = async () => {
     try {
-      await axios.put(`http://localhost:3000/api/products/${selectedProduct._id}`, {
-        ...productDetails,
+      await axios.put(`http://localhost:3000/api/products/${selectedProduct._id}`,  {
+        name: productDetails.name,
+        description: productDetails.description,
+        imageUrl: productDetails.imageUrl,
+        price: productDetails.price,
+        discountPercentage: productDetails.discountPercentage,
+        category: categories.find(category => category.name === productDetails.category),
+        manufacturer: productDetails.manufacturer,
         stock: stockQuantity,
-        isInStock
+        isInStock: isInStock
       });
       fetchProducts();
       handleCloseModal();
@@ -186,6 +195,16 @@ const handleProductClick = async (productId) => {
     fetchProducts(); // Fetch all products without any filters
   };
   
+  const handleDeleteProduct = async () => {
+    try {
+      await axios.delete(`http://localhost:3000/api/products/${selectedProduct._id}`);
+      fetchProducts(); // Re-fetch products to update the list
+      handleCloseModal(); // Close the modal after deletion
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+  
   
 
   return (
@@ -197,7 +216,7 @@ const handleProductClick = async (productId) => {
         <div className="relative mb-4">
           <input
             type="text"
-            placeholder="Search products"
+            placeholder="Search products by Name"
             value={searchQuery}
             onChange={handleSearchChange}
             className="border rounded p-2 pl-10 w-full"
@@ -322,15 +341,15 @@ const handleProductClick = async (productId) => {
                 className="border rounded p-2 w-full"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 mb-1">Image URL:</label>
-              <textarea
-                name="description"
-                value={productDetails.iamgeUrl}
-                onChange={handleInputChange}
-                className="border rounded p-2 w-full"
-              />
-            </div>
+              <div className="mb-4">
+                      <label className="block text-gray-700 mb-1">Image URL:</label>
+                      <textarea
+                        name="imageUrl" // Ensure this matches the property in state
+                        value={productDetails.imageUrl} // Ensure this is linked to state
+                        onChange={handleInputChange}
+                        className="border rounded p-2 w-full"
+                      />
+                    </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-1">Price:</label>
               <input
@@ -407,10 +426,17 @@ const handleProductClick = async (productId) => {
             </div>
             <button
               onClick={handleUpdateProduct}
-              className="bg-blue-500 text-white p-2 rounded"
+              className="bg-blue-500 text-white p-2 rounded mr-2"
             >
               Update Product
             </button>
+            <button
+              onClick={handleDeleteProduct}
+              className="bg-red-500 text-white p-2 rounded"
+            >
+              Delete Product
+            </button>
+
           </div>
         </div>
       )}
