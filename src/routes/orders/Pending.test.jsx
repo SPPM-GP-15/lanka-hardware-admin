@@ -8,7 +8,7 @@ describe('Pending Component', () => {
     render(<Pending />);
 
     // Check if the title and headers are rendered
-    expect(screen.getByText('Pending Orders')).toBeInTheDocument();
+    expect(document.title).toBe('Pending Orders | Lanka Hardwarehub');
   });
 
   test('renders table headers and row', () => {

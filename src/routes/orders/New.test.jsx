@@ -20,12 +20,19 @@ describe('New Component', () => {
     render(<New />);
 
     // Check if the order details are rendered
-    expect(screen.getByText('Ahmed Anwer')).toBeInTheDocument();
-    expect(screen.getByText('Kurunegela')).toBeInTheDocument();
-    expect(screen.getByText('10')).toBeInTheDocument();
-    expect(screen.getByText('22/07/2024')).toBeInTheDocument();
-    expect(screen.getByText('Rs. 1000.00')).toBeInTheDocument();
-    expect(screen.getAllByText('new')).toHaveLength(3);
+    const users = screen.getAllByText('Ahmed Anwer');
+    const locations = screen.getAllByText('Kurunegela');
+    const quantities = screen.getAllByText('10');
+    const dates = screen.getAllByText('22/07/2024');
+    const prices = screen.getAllByText('Rs. 1000.00');
+    const statuses = screen.getAllByText('new');
+
+    expect(users).toHaveLength(3);
+    expect(locations).toHaveLength(3);
+    expect(quantities).toHaveLength(3);
+    expect(dates).toHaveLength(3);
+    expect(prices).toHaveLength(3);
+    expect(statuses).toHaveLength(3);
   });
 
   test('sets document title', () => {

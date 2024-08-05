@@ -1,39 +1,31 @@
-// src/routes/products/Products.test.jsx
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import Products from '../products/Products'; // Import the Products component
+// Completed.test.jsx
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import Completed from "./Completed";
 
-describe('Products Component', () => {
-  test('renders Products component', () => {
-    render(<Products />);
+describe("Completed Component", () => {
+  test("renders Completed component and updates document title", () => {
+    render(<Completed />);
 
-    // Check if the component is rendered correctly
-    expect(screen.getByText('Products')).toBeInTheDocument(); // Replace 'Products' with text you expect in the component
-  });
+    // Check the document title
+    expect(document.title).toBe("Completed Orders | Lanka Hardwarehub");
 
-  test('sets document title', () => {
-    render(<Products />);
-    expect(document.title).toBe('Products | Lanka Hardwarehub'); // Replace with the correct title you expect
-  });
+    // Check if the table is rendered
+    const table = screen.getByRole("table");
+    expect(table).toBeInTheDocument();
 
-  // Add additional tests for the Products component
-  test('renders product details', () => {
-    render(<Products />);
-    
-    // Replace with actual content you expect in the Products component
-    expect(screen.getByText('Product Name')).toBeInTheDocument();
-    expect(screen.getByText('Product Description')).toBeInTheDocument();
-    expect(screen.getByText('$100')).toBeInTheDocument();
-  });
+    // Check if the headers are rendered
+    const headers = ["User", "Location", "Qty", "Date", "Total Price", "Status"];
+    headers.forEach((header) => {
+      expect(screen.getByText(header)).toBeInTheDocument();
+    });
 
-  test('renders pagination buttons', () => {
-    render(<Products />);
-
-    // Check if pagination buttons are rendered
-    expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '2' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '3' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '4' })).toBeInTheDocument();
+    // Check if a row is rendered with specific content
+    expect(screen.getByText("Ahmed Anwer")).toBeInTheDocument();
+    expect(screen.getByText("Kurunegela")).toBeInTheDocument();
+    expect(screen.getByText("10")).toBeInTheDocument();
+    expect(screen.getByText("22/07/2024")).toBeInTheDocument();
+    expect(screen.getByText("Rs. 1000.00")).toBeInTheDocument();
+    expect(screen.getByText("completed")).toBeInTheDocument();
   });
 });
