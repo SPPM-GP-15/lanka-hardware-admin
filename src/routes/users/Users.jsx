@@ -1,52 +1,45 @@
-import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
-import React, { useEffect, useState } from "react";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
+import React, { useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import UserCard from "../../components/userCard/UserCard";
-import { MdEmail } from "react-icons/md";
+import { getAllUsers, updateUser } from '../../api/api';
 
 const User = () => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: "john_doe",
-      email: "john@example.com",
-      address: "123 Main St",
-      phone: "555-1234",
-      dateJoined: "01/01/2023",
-      totalOrders: 5,
-      itemsPurchased: 10,
-      totalEarnings: 5000,
-      blocked: false,
-    },
-    {
-      id: 2,
-      username: "jane_doe",
-      email: "jane@example.com",
-      address: "456 Elm St",
-      phone: "555-5678",
-      dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
-    },
-  ]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const data = await getAllUsers();
+        setUsers(data.users);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchUsers();
+    document.title = 'Users | Lanka Hardwarehub';
+  }, []);
 
   const handleRemove = (userId) => {
     confirmAlert({
-      title: "Confirm to delete",
-      message: "Are you sure you want to delete this user?",
+      title: 'Confirm to delete',
+      message: 'Are you sure you want to delete this user?',
       buttons: [
         {
-          label: "Yes",
-          onClick: () => {
-            setUsers(users.filter((user) => user.id !== userId));
+          label: 'Yes',
+          onClick: async () => {
+            try {
+              // You may want to call an API to actually remove the user
+              setUsers(users.filter((user) => user._id !== userId));
+            } catch (error) {
+              console.error('Error removing user:', error.message);
+            }
           },
         },
         {
-          label: "No",
+          label: 'No',
           onClick: () => {},
         },
       ],
@@ -54,19 +47,12 @@ const User = () => {
   };
 
   const handleBlock = (userId) => {
-    setUsers(
-      users.map((user) =>
-        user.id === userId ? { ...user, blocked: true } : user
-      )
-    );
+    // Implement blocking logic here
+    console.log(`Blocking user with ID: ${userId}`);
   };
 
-  useEffect(() => {
-    document.title = "Users | Lanka Hardwarehub";
-  }, []);
-
   const filteredUsers = users.filter((user) =>
-    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -75,7 +61,7 @@ const User = () => {
         <div className="text-2xl font-bold text-gray-600 mt-2 mb-5">
           Registered Users
         </div>
-        <div className="mb-1 ml-2 text-xs text-gray-500 ">
+        <div className="mb-1 ml-2 text-xs text-gray-500">
           {filteredUsers.length} users found
         </div>
       </div>
@@ -93,7 +79,7 @@ const User = () => {
       <div className="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredUsers.map((user) => (
           <UserCard
-            key={user.id}
+            key={user._id}
             user={user}
             onRemove={handleRemove}
             onBlock={handleBlock}
