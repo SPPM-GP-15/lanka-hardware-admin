@@ -6,50 +6,50 @@ function Cancel() {
   }, []);
 
   return (
-    <div class="py-8">
-      <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-        <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
-          <table class="w-full border border-collapse table-auto">
-            <thead class="">
-              <tr class="text-base font-bold  bg-gray-50 text-center">
-                <th class="px-4 py-3 border-b-2 ">User</th>
-                <th class="px-4 py-3 border-b-2 ">Location</th>
-                <th class="px-4 py-3 border-b-2 ">Qty</th>
-                <th class="px-4 py-3 border-b-2 ">Date</th>
-                <th class="px-4 py-3 border-b-2 ">Total Price</th>
-                <th class="px-4 py-3 border-b-2 ">Status</th>
+    <div className="py-8">
+      <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
+        <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
+          <table className="w-full border border-collapse table-auto">
+            <thead className="">
+              <tr className="text-base font-bold bg-gray-50 text-center">
+                <th className="px-4 py-3 border-b-2">User</th>
+                <th className="px-4 py-3 border-b-2">Location</th>
+                <th className="px-4 py-3 border-b-2">Qty</th>
+                <th className="px-4 py-3 border-b-2">Date</th>
+                <th className="px-4 py-3 border-b-2">Total Price</th>
+                <th className="px-4 py-3 border-b-2">Status</th>
               </tr>
             </thead>
-            <tbody class="text-sm font-normal  bg-white">
-              <tr class="py-10 border-b border-gray-200 hover:bg-gray-100 cursor-pointer text-gray-700 hover:text-black text-center">
-                <td class="px-4 py-4">Ahmed Anwer</td>
-                <td class="px-4 py-4">Kurunegela</td>
-                <td class="px-4 py-4">10</td>
-                <td class="px-4 py-4">22/07/2024</td>
-                <td class="px-4 py-4">Rs. 1000.00</td>
-                <td class="px-5 py-5 text-sm">
-                  <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-red-900">
+            <tbody className="text-sm font-normal bg-white">
+              <tr className="py-10 border-b border-gray-200 hover:bg-gray-100 cursor-pointer text-gray-700 hover:text-black text-center">
+                <td className="px-4 py-4">Ahmed Anwer</td>
+                <td className="px-4 py-4">Kurunegela</td>
+                <td className="px-4 py-4">10</td>
+                <td className="px-4 py-4">22/07/2024</td>
+                <td className="px-4 py-4">Rs. 1000.00</td>
+                <td className="px-5 py-5 text-sm">
+                  <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-red-900">
                     <span
                       aria-hidden="true"
-                      class="absolute inset-0 bg-red-200 rounded-full opacity-50"
+                      className="absolute inset-0 bg-red-200 rounded-full opacity-50"
                     ></span>
-                    <span class="relative">cancelled</span>
+                    <span className="relative">cancelled</span>
                   </span>
                 </td>
               </tr>
             </tbody>
           </table>
-          <div class="flex flex-col items-center px-5 py-5 bg-white xs:flex-row xs:justify-between">
-            <div class="flex items-center">
+          <div className="flex flex-col items-center px-5 py-5 bg-white xs:flex-row xs:justify-between">
+            <div className="flex items-center">
               <button
                 type="button"
-                class="w-full p-4 text-base text-gray-600 bg-white border rounded-l-xl hover:bg-gray-100"
+                className="w-full p-4 text-base text-gray-600 bg-white border rounded-l-xl hover:bg-gray-100"
               >
                 <svg
                   width="9"
                   fill="currentColor"
                   height="8"
-                  class=""
+                  className=""
                   viewBox="0 0 1792 1792"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -58,37 +58,37 @@ function Cancel() {
               </button>
               <button
                 type="button"
-                class="w-full px-4 py-2 text-base text-indigo-500 bg-white border-t border-b hover:bg-gray-100 "
+                className="w-full px-4 py-2 text-base text-indigo-500 bg-white border-t border-b hover:bg-gray-100"
               >
                 1
               </button>
               <button
                 type="button"
-                class="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100"
+                className="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100"
               >
                 2
               </button>
               <button
                 type="button"
-                class="w-full px-4 py-2 text-base text-gray-600 bg-white border-t border-b hover:bg-gray-100"
+                className="w-full px-4 py-2 text-base text-gray-600 bg-white border-t border-b hover:bg-gray-100"
               >
                 3
               </button>
               <button
                 type="button"
-                class="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100"
+                className="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100"
               >
                 4
               </button>
               <button
                 type="button"
-                class="w-full p-4 text-base text-gray-600 bg-white border-t border-b border-r rounded-r-xl hover:bg-gray-100"
+                className="w-full p-4 text-base text-gray-600 bg-white border-t border-b border-r rounded-r-xl hover:bg-gray-100"
               >
                 <svg
                   width="9"
                   fill="currentColor"
                   height="8"
-                  class=""
+                  className=""
                   viewBox="0 0 1792 1792"
                   xmlns="http://www.w3.org/2000/svg"
                 >

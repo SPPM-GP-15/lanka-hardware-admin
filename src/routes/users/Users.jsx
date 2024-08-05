@@ -1,7 +1,6 @@
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
 import UserCard from "../../components/userCard/UserCard";
 import { MdEmail } from "react-icons/md";
 
