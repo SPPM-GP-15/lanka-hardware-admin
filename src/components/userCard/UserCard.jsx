@@ -1,6 +1,6 @@
 import React from "react";
 
-function UserCard({ user, onRemove, onBlock }) {
+function UserCard({ user, onBlock }) {
   return (
     <div className="w-full">
       <div className="relative w-full px-4 py-6 bg-white shadow-xl rounded-3xl">
@@ -34,16 +34,11 @@ function UserCard({ user, onRemove, onBlock }) {
           </div>
         </div>
 
-        <div className="absolute top-4 right-4">
-          <button
-            onClick={() => onRemove(user._id)}
-            className="bg-red-500 text-white px-4 py-2 rounded-md"
-          >
-            Remove
-          </button>
+        {/* Button aligned to the right below the address section */}
+        <div className="mt-4 flex justify-end">
           <button
             onClick={() => onBlock(user._id)}
-            className="bg-yellow-500 text-white px-4 py-2 rounded-md ml-2"
+            className="bg-red-500 text-white px-4 py-2 rounded-md"
           >
             Block
           </button>
