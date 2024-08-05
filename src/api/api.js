@@ -1,7 +1,6 @@
-// src/api/api.js
 import axios from 'axios';
 
-const API_URL = 'https://lanka-hardware-9f40e74e1c93.herokuapp.com';
+const API_URL = 'http://localhost:3000/api/users'; // Replace with your backend URL
 
 // Register user
 export const registerUser = async (userData) => {

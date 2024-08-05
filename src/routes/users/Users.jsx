@@ -1,4 +1,3 @@
-// src/components/User.js
 import React, { useEffect, useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -30,8 +29,13 @@ const User = () => {
       buttons: [
         {
           label: 'Yes',
-          onClick: () => {
-            setUsers(users.filter((user) => user._id !== userId));
+          onClick: async () => {
+            try {
+              // You may want to call an API to actually remove the user
+              setUsers(users.filter((user) => user._id !== userId));
+            } catch (error) {
+              console.error('Error removing user:', error.message);
+            }
           },
         },
         {
