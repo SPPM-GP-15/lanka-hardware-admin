@@ -1,6 +1,4 @@
 import React from "react";
-import { confirmAlert } from "react-confirm-alert";
-import { Link } from "react-router-dom";
 
 function UserCard({ user, onRemove, onBlock }) {
   return (
@@ -31,55 +29,19 @@ function UserCard({ user, onRemove, onBlock }) {
             <p className="flex justify-end text-xs text-gray-800">{user.address}</p>
           </div>
         </div>
-        <div className="">
-          <div className="text-md flex items-center justify-between pb-1 mb-2 space-x-12 md:space-x-24  border-b border-gray-200">
-            <p className="text-md">
-              No of orders{" "}
-              <div>
-                <Link className="text-xs text-blue-500" to={`/orders/${user.id}`}>
-                  View purchased orders
-                </Link>
-              </div>
-            </p>
 
-            <div className="flex items-end text-md font-bold bg-green-50 p-1 text-green-800 rounded-xl">
-              {user.totalOrders}
-            </div>
-          </div>
-
-          <div className="text-md flex items-center justify-between pb-2  space-x-12 md:space-x-24">
-            <p>No of Items Purchased</p>
-            <div className="flex items-end text-md font-bold bg-blue-100 rounded-xl p-1 text-bl">
-              {user.itemsPurchased}
-            </div>
-          </div>
-          <div className="text-md flex items-center justify-between pb-2  space-x-12 md:space-x-24">
-            <p>Total Earnings</p>
-            <div className="flex items-end text-md font-bold rounded-xl p-1 bg-gray-100">
-              Rs. {user.totalEarnings}
-            </div>
-          </div>
+        <div className="flex justify-end space-x-4 mt-4">
           <button
-            type="button"
-            className="text-red-600 hover:text-white border border-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-8 py-1 text-center mt-4"
-            onClick={() => {
-              confirmAlert({
-                title: "Confirm to delete",
-                message: `Are you sure you want to delete this user named ${user.username}?`,
-                buttons: [
-                  {
-                    label: "Yes",
-                    onClick: () => onRemove(user.id),
-                  },
-                  {
-                    label: "No",
-                    onClick: () => {},
-                  },
-                ],
-              });
-            }}
+            onClick={() => onRemove(user.id)}
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
           >
-            Block User
+            Remove
+          </button>
+          <button
+            onClick={() => onBlock(user.id)}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          >
+            Block
           </button>
         </div>
       </div>

@@ -1,9 +1,7 @@
-import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import UserCard from "../../components/userCard/UserCard";
-import { MdEmail } from "react-icons/md";
 
 const User = () => {
   const [users, setUsers] = useState([
@@ -14,10 +12,6 @@ const User = () => {
       address: "123 Main St",
       phone: "555-1234",
       dateJoined: "01/01/2023",
-      totalOrders: 5,
-      itemsPurchased: 10,
-      totalEarnings: 5000,
-      blocked: false,
     },
     {
       id: 2,
@@ -26,10 +20,6 @@ const User = () => {
       address: "456 Elm St",
       phone: "555-5678",
       dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
     },
   ]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -54,11 +44,8 @@ const User = () => {
   };
 
   const handleBlock = (userId) => {
-    setUsers(
-      users.map((user) =>
-        user.id === userId ? { ...user, blocked: true } : user
-      )
-    );
+    // Implement blocking logic here
+    console.log(`Blocking user with ID: ${userId}`);
   };
 
   useEffect(() => {
@@ -75,7 +62,7 @@ const User = () => {
         <div className="text-2xl font-bold text-gray-600 mt-2 mb-5">
           Registered Users
         </div>
-        <div className="mb-1 ml-2 text-xs text-gray-500 ">
+        <div className="mb-1 ml-2 text-xs text-gray-500">
           {filteredUsers.length} users found
         </div>
       </div>
