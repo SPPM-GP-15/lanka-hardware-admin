@@ -1,4 +1,3 @@
-import React from "react";
 import { IoCloudDownloadSharp } from "react-icons/io5";
 import { MdFileDownloadDone } from "react-icons/md";
 import Stepper from "../stepper/Stepper";
