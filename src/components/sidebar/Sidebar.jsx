@@ -30,13 +30,12 @@ function Sidebar() {
           <div>
             <div className="flex items-center justify-start pt-6 ml-8">
               <Link
-                to="/"
+                to="/dashboard"
                 className="text-2xl font-bold text-white"
                 onClick={() => {
                   document.title = "Lanka Hardware Dashboard";
                 }}
               >
-                <img src="../../assets/icon.png" width={50} height={50} />
                 Lanka Hardware
               </Link>
             </div>
@@ -56,13 +55,7 @@ function Sidebar() {
                 <ShoppingCartIcon className="w-6 h-6 mr-3" />
                 <span>Add Product</span>
               </Link>
-              <Link
-                to="/stock-update"
-                className={getLinkClasses("/stock-update")}
-              >
-                <ArchiveBoxIcon className="w-6 h-6 mr-3" />
-                <span>Update Stock</span>
-              </Link>
+
               <Link to="/orders/all" className={getLinkClasses("/orders")}>
                 <AdjustmentsVerticalIcon className="w-6 h-6 mr-3" />
                 <span>Orders</span>

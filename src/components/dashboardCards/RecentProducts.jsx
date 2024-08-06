@@ -1,7 +1,30 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function RecentProducts() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/products`
+        );
+        const sortedProducts = response.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setProducts(sortedProducts.slice(0, 10));
+      } catch (error) {
+        console.error(
+          "Error getting products:",
+          error.response ? error.response.data : error.message
+        );
+      }
+    };
+    fetchProducts();
+  }, []);
+
   return (
     <div className="flex flex-col  w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row mt-12">
       <div className="flex w-full space-x-4">
@@ -31,34 +54,38 @@ function RecentProducts() {
                 </tr>
               </thead>
               <tbody class="text-sm font-normal  bg-white">
-                <tr class="py-10 border-b border-gray-200  text-gray-700 text-center">
-                  <td class="px-4 py-4">
-                    <img
-                      width={60}
-                      height={60}
-                      alt="product-image"
-                      className="rounded-xl object-cover ml-auto mr-auto"
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/481px-Cat03.jpg"
-                    />
-                  </td>
-                  <td class="px-4 py-4 ">Paint bucket</td>
-                  <td class="px-4 py-4 w-3/12">
-                    asdadasdasd asd ad as dasd a as as sadasd as da dasd asd as
-                    asd asd sa dasd asd asd asasd asd
-                  </td>
-                  <td class="px-4 py-4">Electronics</td>
-                  <td class="px-4 py-4">Rs. 1200.00</td>
-                  <td class="px-4 py-4">Rs. 1000.00</td>
-                  <td class="px-5 py-5 text-sm">
-                    <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-gray-900">
-                      <span
-                        aria-hidden="true"
-                        class="absolute inset-0 bg-gray-200 rounded-full opacity-50"
-                      ></span>
-                      <span class="relative">100</span>
-                    </span>
-                  </td>
-                </tr>
+                {products.map((product) => (
+                  <tr
+                    class="py-10 border-b border-gray-200  text-gray-700 text-center"
+                    key={product._id}
+                  >
+                    <td class="px-4 py-4">
+                      <img
+                        width={60}
+                        height={60}
+                        alt="product-image"
+                        className="rounded-xl object-cover ml-auto mr-auto"
+                        src={product.imageUrl}
+                      />
+                    </td>
+                    <td class="px-4 py-4 ">{product.name}</td>
+                    <td class="px-4 py-4 w-3/12">{product.description}</td>
+                    <td class="px-4 py-4">{product.category.name}</td>
+                    <td class="px-4 py-4">
+                      Rs. {product.oldPrice ? product.oldPrice : "00.00"}
+                    </td>
+                    <td class="px-4 py-4">Rs. {product.newPrice}</td>
+                    <td class="px-5 py-5 text-sm">
+                      <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-gray-900">
+                        <span
+                          aria-hidden="true"
+                          class="absolute inset-0 bg-gray-200 rounded-full opacity-50"
+                        ></span>
+                        <span class="relative">{product.stock}</span>
+                      </span>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

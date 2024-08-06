@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import { FaHashtag } from "react-icons/fa6";
 
 function TopSummary() {
+  const [productsCount, setProductsCount] = useState(0);
+  useEffect(() => {
+    const fetchProductsCount = async () => {
+      try {
+        const response = await axios.get(
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/products`
+        );
+        setProductsCount(response.data.length());
+      } catch (error) {
+        console.error(
+          "Error getting products count:",
+          error.response ? error.response.data : error.message
+        );
+      }
+    };
+    fetchProductsCount();
+  }, []);
   return (
     <div className="flex flex-col items-center w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
       <div className="w-1/2 flex items-center shadow-lg rounded-xl  transition-transform transform hover:scale-105 hover:shadow-xl cursor-default">
@@ -36,7 +53,7 @@ function TopSummary() {
                 </span>
                 <div className="w-full rounded-xl ml-5">
                   <div className="mt-6 text-lg font-bold text-black border-b border-gray-200 md:mt-0">
-                    2000
+                    {productsCount}
                   </div>
                   <p className="text-sm text-gray-500">
                     No of Products In Shop
