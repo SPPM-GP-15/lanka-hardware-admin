@@ -56,13 +56,7 @@ function Sidebar() {
                 <ShoppingCartIcon className="w-6 h-6 mr-3" />
                 <span>Add Product</span>
               </Link>
-              <Link
-                to="/stock-update"
-                className={getLinkClasses("/stock-update")}
-              >
-                <ArchiveBoxIcon className="w-6 h-6 mr-3" />
-                <span>Update Stock</span>
-              </Link>
+
               <Link to="/orders/all" className={getLinkClasses("/orders")}>
                 <AdjustmentsVerticalIcon className="w-6 h-6 mr-3" />
                 <span>Orders</span>
