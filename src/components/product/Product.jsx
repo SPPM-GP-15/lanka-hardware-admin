@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import ReactPaginate from 'react-paginate';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import ReactPaginate from "react-paginate";
 import { IoCloseSharp } from "react-icons/io5";
 import { IoFilterSharp } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
@@ -11,20 +11,20 @@ const Product = () => {
   const [stockQuantity, setStockQuantity] = useState(0);
   const [isInStock, setIsInStock] = useState(true);
   const [productDetails, setProductDetails] = useState({
-    name: '',
-    description: '',
-    imageUrl: '', // Make sure this is correctly named
+    name: "",
+    description: "",
+    imageUrl: "", // Make sure this is correctly named
     price: 0,
     discountPercentage: 0,
-    category: '',
-    manufacturer: ''
+    category: "",
+    manufacturer: "",
   });
-  
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [stockStatus, setStockStatus] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [stockStatus, setStockStatus] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
@@ -36,7 +36,9 @@ const Product = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/categories');
+      const response = await axios.get(
+        " https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/categories"
+      );
       setCategories(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -45,68 +47,70 @@ const Product = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/products');
+      const response = await axios.get(
+        " https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/products"
+      );
       setProducts(response.data);
       setFilteredProducts(response.data);
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error("Error fetching products:", error);
     }
   };
 
   const applyFilters = () => {
     let filtered = products;
-  
+
     if (searchQuery) {
-      filtered = filtered.filter(product =>
+      filtered = filtered.filter((product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
-  
+
     if (selectedCategory) {
-      filtered = filtered.filter(product => product.category.name === selectedCategory);
+      filtered = filtered.filter(
+        (product) => product.category.name === selectedCategory
+      );
     }
-  
+
     if (stockStatus) {
-      filtered = filtered.filter(product => {
-        if (stockStatus === 'inStock') return product.stock > 0;
-        if (stockStatus === 'outOfStock') return product.stock === 0;
+      filtered = filtered.filter((product) => {
+        if (stockStatus === "inStock") return product.stock > 0;
+        if (stockStatus === "outOfStock") return product.stock === 0;
         return true;
       });
     }
-  
+
     setFilteredProducts(filtered);
     setCurrentPage(0); // Reset to first page whenever filters are applied
   };
-  
 
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-  
-    let filtered = products.filter(product =>
+
+    let filtered = products.filter((product) =>
       product.name.toLowerCase().includes(query.toLowerCase())
     );
-  
+
     setFilteredProducts(filtered);
     setCurrentPage(0); // Reset to first page whenever search is applied
   };
-  
-  
 
   const handleCategoryChange = (e) => {
     const category = e.target.value;
     setSelectedCategory(category);
   };
-  
+
   const handleStockStatusChange = (e) => {
     const status = e.target.value;
     setStockStatus(status);
   };
-  
 
-const handleProductClick = async (productId) => {
+  const handleProductClick = async (productId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/products/${productId}`);
+      const response = await axios.get(
+        ` https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/products/${productId}`
+      );
       const product = response.data;
       setSelectedProduct(product);
       setStockQuantity(product.stock);
@@ -114,11 +118,11 @@ const handleProductClick = async (productId) => {
       setProductDetails({
         name: product.name,
         description: product.description,
-        iamgeUrl:product.imageUrl,
+        iamgeUrl: product.imageUrl,
         price: product.newPrice,
         discountPercentage: product.discountPercentage,
         category: product.category.name,
-        manufacturer: product.manufacturer
+        manufacturer: product.manufacturer,
       });
       setIsModalOpen(true);
     } catch (error) {
@@ -129,15 +133,14 @@ const handleProductClick = async (productId) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     console.log(`Name: ${name}, Value: ${value}`); // Debugging log
-    setProductDetails(prevState => ({
+    setProductDetails((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
-  
-  
+
   const handleStockQuantityChange = (amount) => {
-    setStockQuantity(prevQuantity => {
+    setStockQuantity((prevQuantity) => {
       const newQuantity = Math.max(0, prevQuantity + amount);
       setIsInStock(newQuantity > 0);
       return newQuantity;
@@ -145,7 +148,7 @@ const handleProductClick = async (productId) => {
   };
 
   const toggleStockStatus = () => {
-    setIsInStock(prevStatus => {
+    setIsInStock((prevStatus) => {
       const newStatus = !prevStatus;
       if (!newStatus) {
         setStockQuantity(0); // Set stock quantity to 0 when out of stock
@@ -165,17 +168,22 @@ const handleProductClick = async (productId) => {
 
   const handleUpdateProduct = async () => {
     try {
-      await axios.put(`http://localhost:3000/api/products/${selectedProduct._id}`,  {
-        name: productDetails.name,
-        description: productDetails.description,
-        imageUrl: productDetails.imageUrl,
-        price: productDetails.price,
-        discountPercentage: productDetails.discountPercentage,
-        category: categories.find(category => category.name === productDetails.category),
-        manufacturer: productDetails.manufacturer,
-        stock: stockQuantity,
-        isInStock: isInStock
-      });
+      await axios.put(
+        ` https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/products/${selectedProduct._id}`,
+        {
+          name: productDetails.name,
+          description: productDetails.description,
+          imageUrl: productDetails.imageUrl,
+          price: productDetails.price,
+          discountPercentage: productDetails.discountPercentage,
+          category: categories.find(
+            (category) => category.name === productDetails.category
+          ),
+          manufacturer: productDetails.manufacturer,
+          stock: stockQuantity,
+          isInStock: isInStock,
+        }
+      );
       fetchProducts();
       handleCloseModal();
     } catch (error) {
@@ -189,23 +197,23 @@ const handleProductClick = async (productId) => {
   );
 
   const clearFilters = () => {
-    setSearchQuery('');
-    setSelectedCategory('');
-    setStockStatus('');
+    setSearchQuery("");
+    setSelectedCategory("");
+    setStockStatus("");
     fetchProducts(); // Fetch all products without any filters
   };
-  
+
   const handleDeleteProduct = async () => {
     try {
-      await axios.delete(`http://localhost:3000/api/products/${selectedProduct._id}`);
+      await axios.delete(
+        ` https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/products/${selectedProduct._id}`
+      );
       fetchProducts(); // Re-fetch products to update the list
       handleCloseModal(); // Close the modal after deletion
     } catch (error) {
       console.error("Error deleting product:", error);
     }
   };
-  
-  
 
   return (
     <div className="container mx-auto p-6 bg-gray-100 min-h-screen">
@@ -236,8 +244,10 @@ const handleProductClick = async (productId) => {
               onChange={handleCategoryChange}
             >
               <option value="">Categories</option>
-              {categories.map(category => (
-                <option key={category._id} value={category.name}>{category.name}</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category.name}>
+                  {category.name}
+                </option>
               ))}
             </select>
             <select
@@ -262,10 +272,8 @@ const handleProductClick = async (productId) => {
               Clear Filters
             </button>
           </div>
-
         </div>
       </div>
-
 
       {/* Product Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 mb-6">
@@ -287,10 +295,10 @@ const handleProductClick = async (productId) => {
               <p className="text-gray-600 mb-2">{product.category.name}</p>
               <p
                 className={`font-semibold mb-2 ${
-                  product.stock > 0 ? 'text-green-500' : 'text-red-500'
+                  product.stock > 0 ? "text-green-500" : "text-red-500"
                 }`}
               >
-                {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                {product.stock > 0 ? "In Stock" : "Out of Stock"}
               </p>
               <p className="text-gray-500">{product.manufacturer}</p>
             </div>
@@ -302,15 +310,21 @@ const handleProductClick = async (productId) => {
 
       {/* Pagination */}
       <ReactPaginate
-        previousLabel={'← Previous'}
-        nextLabel={'Next →'}
+        previousLabel={"← Previous"}
+        nextLabel={"Next →"}
         pageCount={Math.ceil(filteredProducts.length / itemsPerPage)}
         onPageChange={handlePageChange}
-        containerClassName={'flex justify-center mt-6'}
-        pageClassName={'border border-gray-300 rounded-lg p-2 mx-1 cursor-pointer hover:bg-blue-100 transition-colors'}
-        previousClassName={'border border-gray-300 rounded-lg p-2 mx-1 cursor-pointer hover:bg-blue-100 transition-colors'}
-        nextClassName={'border border-gray-300 rounded-lg p-2 mx-1 cursor-pointer hover:bg-blue-100 transition-colors'}
-        activeClassName={'bg-blue-500 text-white'}
+        containerClassName={"flex justify-center mt-6"}
+        pageClassName={
+          "border border-gray-300 rounded-lg p-2 mx-1 cursor-pointer hover:bg-blue-100 transition-colors"
+        }
+        previousClassName={
+          "border border-gray-300 rounded-lg p-2 mx-1 cursor-pointer hover:bg-blue-100 transition-colors"
+        }
+        nextClassName={
+          "border border-gray-300 rounded-lg p-2 mx-1 cursor-pointer hover:bg-blue-100 transition-colors"
+        }
+        activeClassName={"bg-blue-500 text-white"}
       />
 
       {/* Modal for Product Details */}
@@ -341,15 +355,15 @@ const handleProductClick = async (productId) => {
                 className="border rounded p-2 w-full"
               />
             </div>
-              <div className="mb-4">
-                      <label className="block text-gray-700 mb-1">Image URL:</label>
-                      <textarea
-                        name="imageUrl" // Ensure this matches the property in state
-                        value={productDetails.imageUrl} // Ensure this is linked to state
-                        onChange={handleInputChange}
-                        className="border rounded p-2 w-full"
-                      />
-                    </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-1">Image URL:</label>
+              <textarea
+                name="imageUrl" // Ensure this matches the property in state
+                value={productDetails.imageUrl} // Ensure this is linked to state
+                onChange={handleInputChange}
+                className="border rounded p-2 w-full"
+              />
+            </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-1">Price:</label>
               <input
@@ -361,7 +375,9 @@ const handleProductClick = async (productId) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-1">Discount Percentage:</label>
+              <label className="block text-gray-700 mb-1">
+                Discount Percentage:
+              </label>
               <input
                 type="number"
                 name="discountPercentage"
@@ -392,7 +408,9 @@ const handleProductClick = async (productId) => {
               />
             </div>
             <div className="flex items-center mb-4">
-              <label className="block text-gray-700 mr-4">Stock Quantity:</label>
+              <label className="block text-gray-700 mr-4">
+                Stock Quantity:
+              </label>
               <button
                 className="border border-gray-300 rounded p-2 mr-2"
                 onClick={() => handleStockQuantityChange(-1)}
@@ -436,7 +454,6 @@ const handleProductClick = async (productId) => {
             >
               Delete Product
             </button>
-
           </div>
         </div>
       )}
