@@ -9,6 +9,7 @@ const Product = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [stockQuantity, setStockQuantity] = useState(0);
+  const [productCount, setProductCount] = useState(0);
   const [isInStock, setIsInStock] = useState(true);
   const [productDetails, setProductDetails] = useState({
     name: "",
@@ -52,6 +53,7 @@ const Product = () => {
       );
       setProducts(response.data);
       setFilteredProducts(response.data);
+      setProductCount(response.data.length);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -216,8 +218,15 @@ const Product = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-4xl mb-6 text-gray-800">Product Management</h1>
+    <div className="container px-4 mx-auto sm:px-8 bg-gray-100 min-h-screen">
+      <div className="flex items-center space-x-4 mt-10">
+        <div className="text-2xl font-bold text-gray-700 mb-5">
+          Product Management
+        </div>
+        <div className="mb-3 ml-2 text-xs text-gray-500 ">
+          Totlal {productCount} products found
+        </div>
+      </div>
 
       {/* Search and Filter Section */}
       <div className="mb-6">

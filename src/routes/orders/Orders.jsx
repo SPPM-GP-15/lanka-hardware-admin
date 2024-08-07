@@ -1,16 +1,31 @@
-import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Orders = () => {
+  const [count, setCount] = useState(0);
   useEffect(() => {
     document.title = "Orders | Lanka Hardwarehub";
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders`
+        );
+        setCount(response.data.length);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+    fetchOrders();
   }, []);
 
   return (
     <div className="container px-4 mx-auto sm:px-8">
       <div className="flex items-center space-x-4 mt-10">
         <div className="text-2xl font-bold text-gray-700 mb-5">Orders</div>
-        <div className="mb-3 ml-2 text-xs text-gray-500 ">123 orders found</div>
+        <div className="mb-3 ml-2 text-xs text-gray-500 ">
+          Total {count} orders
+        </div>
       </div>
 
       <div className="flex gap-4">
