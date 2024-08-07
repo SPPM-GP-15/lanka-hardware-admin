@@ -105,15 +105,27 @@ function All() {
                               aria-hidden="true"
                               className={`absolute inset-0 ${
                                 order.status === "New"
-                                  ? "bg-blue-400"
+                                  ? "bg-blue-400 text-blue-950"
                                   : order.status === "Pending"
-                                  ? "bg-yellow-400"
+                                  ? "bg-yellow-400 text-yellow-950"
                                   : order.status === "Completed"
-                                  ? "bg-green-200"
-                                  : "bg-red-400"
+                                  ? "bg-green-200 text-green-950"
+                                  : "bg-red-400 text-red-950"
                               } rounded-full opacity-50`}
                             ></span>
-                            <span className="relative">{order.status}</span>
+                            <span
+                              className={`relative ${
+                                order.status === "New"
+                                  ? "text-blue-950"
+                                  : order.status === "Pending"
+                                  ? "text-yellow-950"
+                                  : order.status === "Completed"
+                                  ? "text-green-950"
+                                  : "text-red-950"
+                              } `}
+                            >
+                              {order.status}
+                            </span>
                           </span>
                         </td>
                       </tr>

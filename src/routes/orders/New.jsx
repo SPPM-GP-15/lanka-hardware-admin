@@ -103,9 +103,11 @@ function New() {
                       <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-blue-900">
                         <span
                           aria-hidden="true"
-                          className="absolute inset-0 bg-blue-200 rounded-full opacity-50"
+                          className="absolute inset-0 bg-blue-400 rounded-full opacity-50"
                         ></span>
-                        <span className="relative">{order.status}</span>
+                        <span className="relative text-blue-900">
+                          {order.status}
+                        </span>
                       </span>
                     </td>
                   </tr>

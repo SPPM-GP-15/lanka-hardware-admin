@@ -104,7 +104,9 @@ function Pending() {
                           aria-hidden="true"
                           className="absolute inset-0 bg-yellow-400 rounded-full opacity-50"
                         ></span>
-                        <span className="relative">{order.status}</span>
+                        <span className="relative text-yellow-900">
+                          {order.status}
+                        </span>
                       </span>
                     </td>
                   </tr>

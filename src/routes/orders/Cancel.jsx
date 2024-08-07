@@ -104,7 +104,9 @@ function Cancel() {
                           aria-hidden="true"
                           className="absolute inset-0 bg-red-400 rounded-full opacity-50"
                         ></span>
-                        <span className="relative">{order.status}</span>
+                        <span className="relative text-red-900">
+                          {order.status}
+                        </span>
                       </span>
                     </td>
                   </tr>
