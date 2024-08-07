@@ -33,7 +33,7 @@ function New() {
         const response = await axios.get(
           `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders?status=New`
         );
-        console.log(response);
+        
 
         if (Array.isArray(response.data)) {
           setOrders(response.data);
@@ -62,7 +62,7 @@ function New() {
             <thead>
               <tr className="text-base font-bold bg-gray-50 text-center">
                 <th className="px-4 py-3 border-b-2">User</th>
-                <th className="px-4 py-3 border-b-2">Location</th>
+                <th className="px-4 py-3 border-b-2">Location - City</th>
                 <th className="px-4 py-3 border-b-2">Qty</th>
                 <th className="px-4 py-3 border-b-2">Date</th>
                 <th className="px-4 py-3 border-b-2">Total Price</th>
@@ -81,11 +81,7 @@ function New() {
                       {order.user ? order.user.name : "N/A"}
                     </td>
                     <td className="px-4 py-4">
-                      {order.user &&
-                      order.user.addresses &&
-                      order.user.addresses.length > 0
-                        ? order.user.addresses[0].city
-                        : "N/A"}
+                      {order.user ? order.user.address.city : "N/A"}
                     </td>
                     <td className="px-4 py-4">
                       {order.items.reduce(

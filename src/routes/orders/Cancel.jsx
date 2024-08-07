@@ -61,7 +61,7 @@ function Cancel() {
             <thead class="">
               <tr class="text-base font-bold  bg-gray-50 text-center">
                 <th class="px-4 py-3 border-b-2 ">User</th>
-                <th class="px-4 py-3 border-b-2 ">Location</th>
+                <th class="px-4 py-3 border-b-2 ">Location - City</th>
                 <th class="px-4 py-3 border-b-2 ">Qty</th>
                 <th class="px-4 py-3 border-b-2 ">Date</th>
                 <th class="px-4 py-3 border-b-2 ">Total Price</th>
@@ -80,11 +80,7 @@ function Cancel() {
                       {order.user ? order.user.name : "N/A"}
                     </td>
                     <td className="px-4 py-4">
-                      {order.user &&
-                      order.user.addresses &&
-                      order.user.addresses.length > 0
-                        ? order.user.addresses[0].city
-                        : "N/A"}
+                      {order.user ? order.user.address.city : "N/A"}
                     </td>
                     <td className="px-4 py-4">
                       {order.items.reduce(

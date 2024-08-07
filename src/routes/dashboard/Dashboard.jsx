@@ -1,92 +1,57 @@
 import React, { useEffect, useState } from "react";
-import DashboardCard from "../../components/dashboardCards/DashboardCard";
-import { BiSolidBadgeDollar } from "react-icons/bi";
-import { FaArrowUpShortWide } from "react-icons/fa6";
-import { FaArrowDownWideShort } from "react-icons/fa6";
-import { FaUsers } from "react-icons/fa6";
-import { IoMdCart } from "react-icons/io";
 
 import RecentOrders from "../../components/dashboardCards/RecentOrders";
 import TopSummary from "../../components/dashboardCards/TopSummary";
 import NewUsers from "../../components/dashboardCards/NewUsers";
 import RecentProducts from "../../components/dashboardCards/RecentProducts";
 import NewOrderAlert from "../../components/dashboardCards/NewOrderAlert";
+import axios from "axios";
 
-const cardDetails = [
-  {
-    id: 1,
-    title: "BUDGET",
-    value: "$24K",
-    topIcon: BiSolidBadgeDollar,
-    bottomIcon: FaArrowUpShortWide,
-    desc: "Since last month",
-    topIconColor: "text-red-500",
-    bottomIconColor: "text-green-500",
-  },
-  {
-    id: 2,
-    title: "TOTAL CUSTOMERS",
-    value: "1.6K",
-    topIcon: FaUsers,
-    bottomIcon: FaArrowDownWideShort,
-    desc: "Since last month",
-    topIconColor: "text-blue-500",
-    bottomIconColor: "text-yellow-500",
-  },
-  {
-    id: 3,
-    title: "NEW ORDERS",
-    value: "1.0K",
-    topIcon: IoMdCart,
-    bottomIcon: FaArrowDownWideShort,
-    desc: "Since last month",
-    topIconColor: "text-green-500",
-    bottomIconColor: "text-purple-500",
-  },
-  {
-    id: 4,
-    title: "BUDGET",
-    value: "$24K",
-    topIcon: BiSolidBadgeDollar,
-    bottomIcon: FaArrowUpShortWide,
-    desc: "Since last month",
-    topIconColor: "text-red-500",
-    bottomIconColor: "text-green-500",
-  },
-  {
-    id: 5,
-    title: "TOTAL CUSTOMERS",
-    value: "1.6K",
-    topIcon: FaUsers,
-    bottomIcon: FaArrowDownWideShort,
-    desc: "Since last month",
-    topIconColor: "text-blue-500",
-    bottomIconColor: "text-yellow-500",
-  },
-  {
-    id: 6,
-    title: "NEW ORDERS",
-    value: "1.0K",
-    topIcon: IoMdCart,
-    bottomIcon: FaArrowDownWideShort,
-    desc: "Since last month",
-    topIconColor: "text-green-500",
-    bottomIconColor: "text-purple-500",
-  },
-];
 const Dashboard = () => {
+  const [newOrders, setNewOrders] = useState([]);
+  const [completedOrders, setCompletedOrders] = useState([]);
+  const [totalAmount, setTotalAmount] = useState("00");
+  const [noOfProducts, setNoOfProducts] = useState(0);
+
   useEffect(() => {
     document.title = "Dashboard | Lanka Hardwarehub";
-  }, []);
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders?status=New`
+        );
 
-  const cardDetailsSets = [
-    [cardDetails[0]],
-    [cardDetails[1]],
-    [cardDetails[2]],
-    [cardDetails[3]],
-    [cardDetails[4]],
-    [cardDetails[5]],
-  ];
+        const responseCompleted = await axios.get(
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders?status=New`
+        );
+
+        const incomeResponse = await axios.get(
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders/income/total`
+        );
+        const productsCountResponse = await axios.get(
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/products`
+        );
+
+        setNoOfProducts(productsCountResponse.data.length);
+        setTotalAmount(incomeResponse.data.totalIncome);
+
+        if (Array.isArray(response.data)) {
+          setNewOrders(response.data);
+        } else {
+          console.error("Unexpected response format:", response.data);
+        }
+
+        if (Array.isArray(responseCompleted.data)) {
+          setCompletedOrders(responseCompleted.data);
+        } else {
+          console.error("Unexpected response format:", responseCompleted.data);
+        }
+      } catch (error) {
+        console.error("Error fetching new orders:", error);
+      }
+    };
+    fetchOrders();
+  }, []);
 
   const [isVisible, setIsVisible] = useState(true);
 
@@ -96,11 +61,13 @@ const Dashboard = () => {
 
   return (
     <div className="h-screen px-4 pb-24 overflow-auto md:px-6 p-6">
-      <NewOrderAlert isVisible={isVisible} handleClose={handleClose} />
+      {newOrders.length > 0 && (
+        <NewOrderAlert isVisible={isVisible} handleClose={handleClose} />
+      )}
 
       <div className="flex items-center justify-between  sm:space-x-12 ">
         <div className={`${isVisible ? "mt-9" : "mt-4"}`}>
-          <h1 className="text-4xl font-semibold text-gray-800">
+          <h1 className="text-4xl font-semibold text-gray-800 ">
             Welcome to Admin Dashboard
           </h1>
           <h2 className="text-gray-400 text-md">
@@ -108,7 +75,12 @@ const Dashboard = () => {
           </h2>
         </div>
       </div>
-      <TopSummary />
+      <TopSummary
+        newOrders={newOrders}
+        completedOrders={completedOrders}
+        totalAmount={totalAmount}
+        noOfProducts={noOfProducts}
+      />
 
       <div className="flex flex-col  w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row mt-14">
         <div className="flex w-full space-x-4">
@@ -117,16 +89,6 @@ const Dashboard = () => {
         </div>
       </div>
       <RecentProducts />
-
-      <div className="p-4 placeholder:">
-        <div className="flex flex-wrap gap-20 justify-center items-center">
-          {cardDetailsSets.map((cardDetails, index) => (
-            <div key={index} className="w-1/4">
-              <DashboardCard cardDetails={cardDetails} />
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };

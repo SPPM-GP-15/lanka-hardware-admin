@@ -66,7 +66,7 @@ function All() {
                 <thead>
                   <tr className="text-base font-bold bg-gray-50 text-center">
                     <th className="px-4 py-3 border-b-2">User</th>
-                    <th className="px-4 py-3 border-b-2">Location</th>
+                    <th className="px-4 py-3 border-b-2">Location - City</th>
                     <th className="px-4 py-3 border-b-2">Qty</th>
                     <th className="px-4 py-3 border-b-2">Date</th>
                     <th className="px-4 py-3 border-b-2">Total Price</th>
@@ -85,7 +85,7 @@ function All() {
                           {order.user ? order.user.name : "N/A"}
                         </td>
                         <td className="px-4 py-4">
-                          {order.user ? order.user.location : "N/A"}
+                          {order.user ? order.user.address.city : "N/A"}
                         </td>
                         <td className="px-4 py-4">
                           {order.items.reduce(

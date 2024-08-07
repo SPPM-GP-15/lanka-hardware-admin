@@ -41,47 +41,55 @@ function RecentProducts() {
                 View all products
               </Link>
             </div>
-            <table class="w-full rounded-full table-auto">
-              <thead class="text-sm ">
-                <tr class="text-base font-bold  bg-gray-50 text-center">
-                  <th class="px-4 py-3 border-b-2 ">Image</th>
-                  <th class="px-4 py-3 border-b-2 ">Title</th>
-                  <th class="px-4 py-3 border-b-2 ">Description</th>
-                  <th class="px-4 py-3 border-b-2 ">Catergory</th>
-                  <th class="px-4 py-3 border-b-2 ">Old Price</th>
-                  <th class="px-4 py-3 border-b-2 ">New Price</th>
-                  <th class="px-4 py-3 border-b-2 ">Stock</th>
+            <table className="w-full rounded-full table-auto">
+              <thead className="text-sm ">
+                <tr className="text-base font-bold  bg-gray-50 text-center">
+                  <th className="px-4 py-3 border-b-2 ">Image</th>
+                  <th className="px-4 py-3 border-b-2 ">Title</th>
+                  <th className="px-4 py-3 border-b-2 ">Description</th>
+                  <th className="px-4 py-3 border-b-2 ">Catergory</th>
+                  <th className="px-4 py-3 border-b-2 ">Old Price</th>
+                  <th className="px-4 py-3 border-b-2 ">New Price</th>
+                  <th className="px-4 py-3 border-b-2 ">Stock</th>
                 </tr>
               </thead>
-              <tbody class="text-sm font-normal  bg-white">
+              <tbody className="text-sm font-normal  bg-white">
                 {products.map((product) => (
                   <tr
-                    class="py-10 border-b border-gray-200  text-gray-700 text-center"
+                    className="py-10 border-b border-gray-200  text-gray-700 text-center"
                     key={product._id}
                   >
-                    <td class="px-4 py-4">
+                    <td className="px-4 py-4">
                       <img
                         width={60}
                         height={60}
                         alt="product-image"
-                        className="rounded-xl object-cover ml-auto mr-auto"
+                        classNameName="rounded-xl object-cover ml-auto mr-auto"
                         src={product.imageUrl}
                       />
                     </td>
-                    <td class="px-4 py-4 ">{product.name}</td>
-                    <td class="px-4 py-4 w-3/12">{product.description}</td>
-                    <td class="px-4 py-4">{product.category.name}</td>
-                    <td class="px-4 py-4">
+                    <td className="px-4 py-4 ">{product.name}</td>
+                    <td className="px-4 py-4 w-3/12">{product.description}</td>
+                    <td className="px-4 py-4">{product.category.name}</td>
+                    <td className="px-4 py-4">
                       Rs. {product.oldPrice ? product.oldPrice : "00.00"}
                     </td>
-                    <td class="px-4 py-4">Rs. {product.newPrice}</td>
-                    <td class="px-5 py-5 text-sm">
-                      <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-gray-900">
+                    <td className="px-4 py-4">Rs. {product.newPrice}</td>
+                    <td className="px-5 py-5 text-sm">
+                      <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-gray-900">
                         <span
                           aria-hidden="true"
-                          class="absolute inset-0 bg-gray-200 rounded-full opacity-50"
+                          className={`absolute inset-0 ${
+                            product.stock == 0 ? "bg-red-400" : "bg-gray-200"
+                          } rounded-full opacity-50`}
                         ></span>
-                        <span class="relative">{product.stock}</span>
+                        <span
+                          className={`relative ${
+                            product.stock == 0 && "text-red-900"
+                          } `}
+                        >
+                          {product.stock}
+                        </span>
                       </span>
                     </td>
                   </tr>
