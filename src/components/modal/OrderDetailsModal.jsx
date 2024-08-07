@@ -23,7 +23,7 @@ const OrderDetailsModal = ({ open, handleClose, order }) => {
   const handleButtonClick = async (newStatus) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/orders/${order._id}/status`,
+        `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders/${order._id}/status`,
         { status: newStatus }
       );
 

@@ -31,7 +31,7 @@ function Pending() {
     const fetchPendingOrders = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/orders?status=Pending`
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders?status=Pending`
         );
 
         if (Array.isArray(response.data)) {

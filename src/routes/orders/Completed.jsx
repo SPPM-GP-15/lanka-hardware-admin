@@ -31,7 +31,7 @@ function Completed() {
     const fetchCompletedOrders = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/orders?status=Completed`
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders?status=Completed`
         );
 
         if (Array.isArray(response.data)) {

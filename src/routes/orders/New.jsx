@@ -31,7 +31,7 @@ function New() {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/orders?status=New`
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders?status=New`
         );
         console.log(response);
 

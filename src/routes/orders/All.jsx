@@ -36,7 +36,9 @@ function All() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`http://localhost:3000/api/orders`);
+      const response = await axios.get(
+        `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders`
+      );
       setOrders(response.data);
       setPageCount(Math.ceil(response.data.length / ordersPerPage));
     } catch (error) {
