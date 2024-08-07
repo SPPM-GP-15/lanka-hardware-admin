@@ -110,7 +110,7 @@ function All() {
                                   ? "bg-yellow-400"
                                   : order.status === "Completed"
                                   ? "bg-green-200"
-                                  : "bg-red-200"
+                                  : "bg-red-400"
                               } rounded-full opacity-50`}
                             ></span>
                             <span className="relative">{order.status}</span>
