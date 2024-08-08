@@ -14,7 +14,6 @@ import Initial from "./routes/initial/Initial";
 import NotFound from "./routes/not-found/NotFound";
 import Dashboard from "./routes/dashboard/Dashboard";
 import PostProducts from "./routes/post-products/PostProduct";
-import Stock from "./routes/stock/Stock";
 import All from "./routes/orders/All";
 import New from "./routes/orders/New";
 import Pending from "./routes/orders/Pending";
@@ -36,7 +35,6 @@ const router = createBrowserRouter(
       <Route path="products" element={<Products />} />
       <Route path="users" element={<Users />} />
       <Route path="post-product" element={<PostProducts />} />
-      <Route path="stock-update" element={<Stock />} />
 
       <Route path="*" element={<NotFound />} />
     </Route>

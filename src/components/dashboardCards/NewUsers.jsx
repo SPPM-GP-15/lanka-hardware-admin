@@ -1,7 +1,26 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function NewUsers() {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.post(
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/users/getAllUsers`
+        );
+        const sortedUsers = response.data.users.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setUsers(sortedUsers.slice(0, 8));
+      } catch (error) {
+        console.error("Error fetching new orders:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
+
   return (
     <div className="w-2/6  shadow-lg rounded-xl  h-fit">
       <div className="relative w-full px-4 py-6 bg-white shadow-lg  rounded-xl">
@@ -16,27 +35,15 @@ function NewUsers() {
             View all users
           </Link>
         </div>
-        <div className="border-b border-gray-300 my-3 pb-1">
-          <p className="text-sm text-gray-700 mb-1">Name - Ahmed Anwer</p>
-          <p className="text-xs text-gray-700 mb-1">
-            Email - ahmedanwer0094@gmail.com
-          </p>
-          <p className="text-xs text-gray-700 mb-1">Phone - 0768242884</p>
-        </div>
-        <div className="border-b border-gray-300 my-3 pb-1">
-          <p className="text-sm text-gray-700 mb-1">Name - Ahmed Anwer</p>
-          <p className="text-xs text-gray-700 mb-1">
-            Email - ahmedanwer0094@gmail.com
-          </p>
-          <p className="text-xs text-gray-700 mb-1">Phone - 0768242884</p>
-        </div>
-        <div className="border-b border-gray-300 my-3 pb-1">
-          <p className="text-sm text-gray-700 mb-1">Name - Ahmed Anwer</p>
-          <p className="text-xs text-gray-700 mb-1">
-            Email - ahmedanwer0094@gmail.com
-          </p>
-          <p className="text-xs text-gray-700 mb-1">Phone - 0768242884</p>
-        </div>
+        {users.map((user, index) => (
+          <div className="border-b border-gray-300 my-3 pb-1" key={index}>
+            <p className="text-sm text-gray-700 mb-1">Name - {user.name}</p>
+            <p className="text-xs text-gray-700 mb-1">Email - {user.email}</p>
+            <p className="text-xs text-gray-700 mb-1">
+              Phone - {user.phoneNumber}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );
