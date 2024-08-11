@@ -2,130 +2,27 @@ import React, { useEffect, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import UserCard from "../../components/userCard/UserCard";
+import axios from "axios";
 
 const User = () => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: "john_doe",
-      email: "john@example.com",
-      address: "123 Main St",
-      phone: "555-1234",
-      dateJoined: "01/01/2023",
-      totalOrders: 5,
-      itemsPurchased: 10,
-      totalEarnings: 5000,
-      blocked: false,
-    },
-    {
-      id: 2,
-      username: "jane_doe",
-      email: "jane@example.com",
-      address: "456 Elm St",
-      phone: "555-5678",
-      dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
-    },
-    {
-      id: 2,
-      username: "jane_doe",
-      email: "jane@example.com",
-      address: "456 Elm St",
-      phone: "555-5678",
-      dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
-    },
-    {
-      id: 2,
-      username: "jane_doe",
-      email: "jane@example.com",
-      address: "456 Elm St",
-      phone: "555-5678",
-      dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
-    },
-    {
-      id: 2,
-      username: "jane_doe",
-      email: "jane@example.com",
-      address: "456 Elm St",
-      phone: "555-5678",
-      dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
-    },
-    {
-      id: 2,
-      username: "jane_doe",
-      email: "jane@example.com",
-      address: "456 Elm St",
-      phone: "555-5678",
-      dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
-    },
-    {
-      id: 2,
-      username: "jane_doe",
-      email: "jane@example.com",
-      address: "456 Elm St",
-      phone: "555-5678",
-      dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
-    },
-    {
-      id: 2,
-      username: "jane_doe",
-      email: "jane@example.com",
-      address: "456 Elm St",
-      phone: "555-5678",
-      dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
-    },
-    {
-      id: 2,
-      username: "jane_doe",
-      email: "jane@example.com",
-      address: "456 Elm St",
-      phone: "555-5678",
-      dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
-    },
-    {
-      id: 2,
-      username: "jane_doe",
-      email: "jane@example.com",
-      address: "456 Elm St",
-      phone: "555-5678",
-      dateJoined: "02/02/2023",
-      totalOrders: 3,
-      itemsPurchased: 6,
-      totalEarnings: 3000,
-      blocked: false,
-    },
-  ]);
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.post(
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/users/getAllUsers`
+        );
+        const sortedUsers = response.data.users.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setUsers(sortedUsers);
+      } catch (error) {
+        console.error("Error fetching new orders:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleRemove = (userId) => {
@@ -150,7 +47,7 @@ const User = () => {
   const handleBlock = (userId) => {
     setUsers(
       users.map((user) =>
-        user.id === userId ? { ...user, blocked: true } : user
+        user._id === userId ? { ...user, blocked: true } : user
       )
     );
   };
@@ -160,7 +57,7 @@ const User = () => {
   }, []);
 
   const filteredUsers = users.filter((user) =>
-    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
