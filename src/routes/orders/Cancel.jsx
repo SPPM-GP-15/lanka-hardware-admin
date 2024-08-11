@@ -54,18 +54,18 @@ function Cancel() {
   );
 
   return (
-    <div class="py-8">
-      <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-        <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
-          <table class="w-full border border-collapse table-auto">
-            <thead class="">
-              <tr class="text-base font-bold  bg-gray-50 text-center">
-                <th class="px-4 py-3 border-b-2 ">User</th>
-                <th class="px-4 py-3 border-b-2 ">Location - City</th>
-                <th class="px-4 py-3 border-b-2 ">Qty</th>
-                <th class="px-4 py-3 border-b-2 ">Date</th>
-                <th class="px-4 py-3 border-b-2 ">Total Price</th>
-                <th class="px-4 py-3 border-b-2 ">Status</th>
+    <div className="py-8">
+      <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
+        <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
+          <table className="w-full border border-collapse table-auto">
+            <thead className="">
+              <tr className="text-base font-bold  bg-gray-50 text-center">
+                <th className="px-4 py-3 border-b-2 ">User</th>
+                <th className="px-4 py-3 border-b-2 ">Location - City</th>
+                <th className="px-4 py-3 border-b-2 ">Qty</th>
+                <th className="px-4 py-3 border-b-2 ">Date</th>
+                <th className="px-4 py-3 border-b-2 ">Total Price</th>
+                <th className="px-4 py-3 border-b-2 ">Status</th>
               </tr>
             </thead>
             <tbody className="text-sm font-normal bg-white">
