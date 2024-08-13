@@ -80,7 +80,7 @@ function Cancel() {
                       {order.user ? order.user.name : "N/A"}
                     </td>
                     <td className="px-4 py-4">
-                      {order.user ? order.user.address.city : "N/A"}
+                      {order.user.address ? order.user.address.city : "N/A"}
                     </td>
                     <td className="px-4 py-4">
                       {order.items.reduce(

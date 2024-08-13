@@ -53,7 +53,7 @@ function RecentOrders() {
               >
                 <td className="px-4 py-4">{item.user.name}</td>
                 <td className="px-4 py-4">
-                  {item.user ? item.user.address.city : "N/A"}
+                  {item.user.address ? item.user.address.city : "N/A"}
                 </td>
                 <td className="px-4 py-4">
                   {item.items.reduce((sum, item) => sum + item.quantity, 0)}
