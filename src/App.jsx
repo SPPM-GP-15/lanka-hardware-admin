@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Home from "./routes/home/Home";
 import Login from "./routes/login/Login";
 import Orders from "./routes/orders/Orders";
 import Products from "./routes/products/Products";
@@ -14,18 +13,17 @@ import Initial from "./routes/initial/Initial";
 import NotFound from "./routes/not-found/NotFound";
 import Dashboard from "./routes/dashboard/Dashboard";
 import PostProducts from "./routes/post-products/PostProduct";
-import Stock from "./routes/stock/Stock";
 import All from "./routes/orders/All";
 import New from "./routes/orders/New";
 import Pending from "./routes/orders/Pending";
 import Completed from "./routes/orders/Completed";
 import Cancel from "./routes/orders/Cancel";
+import { AuthContext } from "./context/AuthContext";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Initial />}>
-      <Route path="home" element={<Home />} />
-      <Route path="dashboard" element={<Dashboard />} />
+      <Route path="dashboard" index element={<Dashboard />} />
       <Route path="orders" element={<Orders />}>
         <Route path="all" element={<All />} />
         <Route path="new" element={<New />} />
@@ -36,15 +34,27 @@ const router = createBrowserRouter(
       <Route path="products" element={<Products />} />
       <Route path="users" element={<Users />} />
       <Route path="post-product" element={<PostProducts />} />
-      <Route path="stock-update" element={<Stock />} />
 
       <Route path="*" element={<NotFound />} />
     </Route>
   )
 );
 
+const routerLogin = createBrowserRouter(
+  createRoutesFromElements(<Route path="/" element={<Login />} />)
+);
+
 function App() {
-  return <RouterProvider router={router} />;
+  const { user } = useContext(AuthContext);
+  return (
+    <>
+      {user === null ? (
+        <RouterProvider router={routerLogin} />
+      ) : (
+        <RouterProvider router={router} />
+      )}
+    </>
+  );
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   HomeIcon,
   ShoppingBagIcon,
@@ -6,13 +6,22 @@ import {
   UserIcon,
   ArchiveBoxIcon,
   ShoppingCartIcon,
+  ArrowLeftEndOnRectangleIcon,
 } from "@heroicons/react/24/outline";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiFillProduct } from "react-icons/ai";
+import { AuthContext } from "../../context/AuthContext";
 
 function Sidebar() {
   const location = useLocation();
   const currentUrl = location.pathname;
+  const { setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    navigate("/");
+  };
 
   const getLinkClasses = (path) => {
     const isActive = currentUrl === path || currentUrl.startsWith(path);
@@ -30,13 +39,12 @@ function Sidebar() {
           <div>
             <div className="flex items-center justify-start pt-6 ml-8">
               <Link
-                to="/"
+                to="/dashboard"
                 className="text-2xl font-bold text-white"
                 onClick={() => {
                   document.title = "Lanka Hardware Dashboard";
                 }}
               >
-                <img src="../../assets/icon.png" width={50} height={50} />
                 Lanka Hardware
               </Link>
             </div>
@@ -56,13 +64,7 @@ function Sidebar() {
                 <ShoppingCartIcon className="w-6 h-6 mr-3" />
                 <span>Add Product</span>
               </Link>
-              <Link
-                to="/stock-update"
-                className={getLinkClasses("/stock-update")}
-              >
-                <ArchiveBoxIcon className="w-6 h-6 mr-3" />
-                <span>Update Stock</span>
-              </Link>
+
               <Link to="/orders/all" className={getLinkClasses("/orders")}>
                 <AdjustmentsVerticalIcon className="w-6 h-6 mr-3" />
                 <span>Orders</span>
@@ -72,6 +74,18 @@ function Sidebar() {
                 <span>Users</span>
               </Link>
             </nav>
+          </div>
+          {/* Logout button added here */}
+          <div className="mb-6">
+            <div
+              className={
+                "flex items-center px-6 py-2 m-4 text-sm font-medium text-white hover:bg-red-00 rounded-md bg-red-700"
+              }
+              onClick={logout}
+            >
+              <ArrowLeftEndOnRectangleIcon className="w-6 h-6 mr-3" />
+              <span>Log Out</span>
+            </div>
           </div>
         </div>
       </div>

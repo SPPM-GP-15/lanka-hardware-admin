@@ -13,12 +13,12 @@ const Initial = () => {
         </div>
       </div>
       <div className="md:hidden flex justify-center mt-32">
-        <div class="flex flex-col items-center justify-center py-8 px-4 text-center bg-gray-100  rounded-lg shadow-md">
+        <div className="flex flex-col items-center justify-center py-8 px-4 text-center bg-gray-100  rounded-lg shadow-md">
           <PaperClipIcon className="w-12 h-12  text-gray-700" />
-          <h3 class="text-xl font-medium mt-4 text-gray-700 ">
+          <h3 className="text-xl font-medium mt-4 text-gray-700 ">
             Not Supported on Mobile View
           </h3>
-          <p class="text-gray-500 mt-2">
+          <p className="text-gray-500 mt-2">
             The website you are looking was not build for mobile view.
           </p>
         </div>

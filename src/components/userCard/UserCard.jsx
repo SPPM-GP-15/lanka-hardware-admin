@@ -6,37 +6,50 @@ function UserCard({ user, onRemove, onBlock }) {
   return (
     <div className="w-full">
       <div className="relative w-full px-4 py-6 bg-white shadow-xl rounded-3xl">
-        <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max">
+        {/* <p className="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max">
           Id - {user.id}
-        </p>
+        </p> */}
         <div className="flex items-end my-6 space-x-2">
-          <p className="text-xl font-bold text-black">{user.username}</p>
+          <p className="text-xl font-bold text-black">{user.name}</p>
         </div>
 
         <div className="flex items-center justify-between pb-2 mb-2 text-sm border-b border-gray-200 sm:space-x-12">
           <p>Email</p>
-          <div className="flex items-end text-xs text-gray-800">{user.email}</div>
+          <div className="flex items-end text-xs text-gray-800">
+            {user.email}
+          </div>
         </div>
         <div className="flex items-center justify-between pb-2 mb-2 text-sm border-b border-gray-200 sm:space-x-12">
           <p>Phone Number</p>
-          <div className="flex items-end text-xs text-gray-800">{user.phone}</div>
+          <div className="flex items-end text-xs text-gray-800">
+            {user.phoneNumber}
+          </div>
         </div>
         <div className="flex items-center justify-between pb-2 mb-2 text-sm border-b border-gray-200 sm:space-x-12">
           <p>Date Joined</p>
-          <div className="flex items-end text-xs text-gray-800">{user.dateJoined}</div>
+          <div className="flex items-end text-xs text-gray-800">
+            {new Date(user.createdAt).toLocaleDateString()}
+          </div>
         </div>
         <div className="flex items-center justify-between pb-2 mb-2 text-sm border-b border-gray-200 sm:space-x-12">
           <p>Default Address</p>
           <div>
-            <p className="flex justify-end text-xs text-gray-800">{user.address}</p>
+            <p className="flex justify-end text-xs text-gray-800">
+              {user.address
+                ? user.address.addressLine + ", " + user.address.city
+                : "No address added"}
+            </p>
           </div>
         </div>
-        <div className="">
+        {/* <div className="">
           <div className="text-md flex items-center justify-between pb-1 mb-2 space-x-12 md:space-x-24  border-b border-gray-200">
             <p className="text-md">
               No of orders{" "}
               <div>
-                <Link className="text-xs text-blue-500" to={`/orders/${user.id}`}>
+                <Link
+                  className="text-xs text-blue-500"
+                  to={`/orders/${user.id}`}
+                >
                   View purchased orders
                 </Link>
               </div>
@@ -81,7 +94,7 @@ function UserCard({ user, onRemove, onBlock }) {
           >
             Block User
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

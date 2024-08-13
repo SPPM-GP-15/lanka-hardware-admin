@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 import { FaHashtag } from "react-icons/fa6";
 
-function TopSummary() {
+function TopSummary({ newOrders, completedOrders, totalAmount, noOfProducts }) {
   return (
     <div className="flex flex-col items-center w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
       <div className="w-1/2 flex items-center shadow-lg rounded-xl  transition-transform transform hover:scale-105 hover:shadow-xl cursor-default">
@@ -16,7 +16,7 @@ function TopSummary() {
                 </span>
                 <div className="w-full rounded-xl ml-5">
                   <div className="mt-6 text-lg font-bold text-black border-b border-gray-200 md:mt-0">
-                    Rs. 2,000,000.00
+                    Rs. {totalAmount}.00
                   </div>
                   <p className="text-sm text-gray-500">Total Earnings</p>
                 </div>
@@ -36,7 +36,7 @@ function TopSummary() {
                 </span>
                 <div className="w-full rounded-xl ml-5">
                   <div className="mt-6 text-lg font-bold text-black border-b border-gray-200 md:mt-0">
-                    2000
+                    {noOfProducts}
                   </div>
                   <p className="text-sm text-gray-500">
                     No of Products In Shop
@@ -57,7 +57,7 @@ function TopSummary() {
                 </span>
                 <div className="w-full rounded-xl ml-5">
                   <div className="mt-6 text-lg font-bold text-black border-b border-gray-200 md:mt-0">
-                    123
+                    {completedOrders.length}
                   </div>
                   <p className="text-sm text-gray-500">
                     Number of Orders Completed
@@ -78,7 +78,7 @@ function TopSummary() {
                 </span>
                 <div className="w-full rounded-xl ml-5">
                   <div className="mt-6 text-lg font-bold text-red border-b border-gray-200 md:mt-0">
-                    12
+                    {newOrders.length}
                   </div>
                   <p className="text-sm text-gray-500">New Orders</p>
                 </div>

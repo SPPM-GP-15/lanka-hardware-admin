@@ -1,104 +1,156 @@
-import React, { useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import OrderDetailsModal from "../../components/modal/OrderDetailsModal";
+import ReactPaginate from "react-paginate";
 
 function Cancel() {
+  const [open, setOpen] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [ordersPerPage] = useState(3);
+
+  const handleOpen = (order) => {
+    setSelectedOrder(order);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setSelectedOrder(null);
+    setOpen(false);
+  };
+
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
   useEffect(() => {
-    document.title = "Cancelled Orders | Lanka Hardwarehub";
-  }, []);
+    document.title = "Pending Orders | Lanka Hardwarehub";
+
+    const fetchPendingOrders = async () => {
+      try {
+        const response = await axios.get(
+          `https://lanka-hardware-9f40e74e1c93.herokuapp.com/api/orders?status=Cancelled`
+        );
+
+        if (Array.isArray(response.data)) {
+          setOrders(response.data);
+          setPageCount(Math.ceil(response.data.length / ordersPerPage));
+        } else {
+          console.error("Unexpected response format:", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching cancel orders:", error);
+      }
+    };
+
+    fetchPendingOrders();
+  }, [ordersPerPage]);
+
+  const currentOrders = orders.slice(
+    currentPage * ordersPerPage,
+    (currentPage + 1) * ordersPerPage
+  );
 
   return (
-    <div class="py-8">
-      <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
-        <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
-          <table class="w-full border border-collapse table-auto">
-            <thead class="">
-              <tr class="text-base font-bold  bg-gray-50 text-center">
-                <th class="px-4 py-3 border-b-2 ">User</th>
-                <th class="px-4 py-3 border-b-2 ">Location</th>
-                <th class="px-4 py-3 border-b-2 ">Qty</th>
-                <th class="px-4 py-3 border-b-2 ">Date</th>
-                <th class="px-4 py-3 border-b-2 ">Total Price</th>
-                <th class="px-4 py-3 border-b-2 ">Status</th>
+    <div className="py-8">
+      <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
+        <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
+          <table className="w-full border border-collapse table-auto">
+            <thead className="">
+              <tr className="text-base font-bold  bg-gray-50 text-center">
+                <th className="px-4 py-3 border-b-2 ">User</th>
+                <th className="px-4 py-3 border-b-2 ">Location - City</th>
+                <th className="px-4 py-3 border-b-2 ">Qty</th>
+                <th className="px-4 py-3 border-b-2 ">Date</th>
+                <th className="px-4 py-3 border-b-2 ">Total Price</th>
+                <th className="px-4 py-3 border-b-2 ">Status</th>
               </tr>
             </thead>
-            <tbody class="text-sm font-normal  bg-white">
-              <tr class="py-10 border-b border-gray-200 hover:bg-gray-100 cursor-pointer text-gray-700 hover:text-black text-center">
-                <td class="px-4 py-4">Ahmed Anwer</td>
-                <td class="px-4 py-4">Kurunegela</td>
-                <td class="px-4 py-4">10</td>
-                <td class="px-4 py-4">22/07/2024</td>
-                <td class="px-4 py-4">Rs. 1000.00</td>
-                <td class="px-5 py-5 text-sm">
-                  <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-red-900">
-                    <span
-                      aria-hidden="true"
-                      class="absolute inset-0 bg-red-200 rounded-full opacity-50"
-                    ></span>
-                    <span class="relative">cancelled</span>
-                  </span>
-                </td>
-              </tr>
+            <tbody className="text-sm font-normal bg-white">
+              {currentOrders.length > 0 ? (
+                currentOrders.map((order) => (
+                  <tr
+                    key={order._id}
+                    onClick={() => handleOpen(order)}
+                    className="py-10 border-b border-gray-200 hover:bg-gray-100 cursor-pointer text-gray-700 hover:text-black text-center"
+                  >
+                    <td className="px-4 py-4">
+                      {order.user ? order.user.name : "N/A"}
+                    </td>
+                    <td className="px-4 py-4">
+                      {order.user ? order.user.address.city : "N/A"}
+                    </td>
+                    <td className="px-4 py-4">
+                      {order.items.reduce(
+                        (total, item) => total + item.quantity,
+                        0
+                      )}
+                    </td>
+                    <td className="px-4 py-4">
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-4 py-4">
+                      Rs. {order.totalAmount.toFixed(2)}
+                    </td>
+                    <td className="px-5 py-5 text-sm">
+                      <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-blue-900">
+                        <span
+                          aria-hidden="true"
+                          className="absolute inset-0 bg-red-400 rounded-full opacity-50"
+                        ></span>
+                        <span className="relative text-red-900">
+                          {order.status}
+                        </span>
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="px-4 py-4 text-center">
+                    No cancelled orders available.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
-          <div class="flex flex-col items-center px-5 py-5 bg-white xs:flex-row xs:justify-between">
-            <div class="flex items-center">
-              <button
-                type="button"
-                class="w-full p-4 text-base text-gray-600 bg-white border rounded-l-xl hover:bg-gray-100"
-              >
-                <svg
-                  width="9"
-                  fill="currentColor"
-                  height="8"
-                  class=""
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1427 301l-531 531 531 531q19 19 19 45t-19 45l-166 166q-19 19-45 19t-45-19l-742-742q-19-19-19-45t19-45l742-742q19-19 45-19t45 19l166 166q19 19 19 45t-19 45z"></path>
-                </svg>
-              </button>
-              <button
-                type="button"
-                class="w-full px-4 py-2 text-base text-indigo-500 bg-white border-t border-b hover:bg-gray-100 "
-              >
-                1
-              </button>
-              <button
-                type="button"
-                class="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100"
-              >
-                2
-              </button>
-              <button
-                type="button"
-                class="w-full px-4 py-2 text-base text-gray-600 bg-white border-t border-b hover:bg-gray-100"
-              >
-                3
-              </button>
-              <button
-                type="button"
-                class="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100"
-              >
-                4
-              </button>
-              <button
-                type="button"
-                class="w-full p-4 text-base text-gray-600 bg-white border-t border-b border-r rounded-r-xl hover:bg-gray-100"
-              >
-                <svg
-                  width="9"
-                  fill="currentColor"
-                  height="8"
-                  class=""
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z"></path>
-                </svg>
-              </button>
-            </div>
+          <div className="flex justify-center py-5 bg-white">
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              onPageChange={handlePageChange}
+              containerClassName={"flex space-x-2"}
+              pageClassName={"flex items-center"}
+              pageLinkClassName={
+                "bg-white text-black px-3 rounded-lg border border-black"
+              }
+              previousClassName={"flex items-center"}
+              previousLinkClassName={
+                "bg-white text-black px-3 rounded border border-black"
+              }
+              nextClassName={"flex items-center"}
+              nextLinkClassName={
+                "bg-white text-black px-3 rounded border border-black"
+              }
+              breakClassName={"flex items-center"}
+              breakLinkClassName={
+                "bg-white text-black p-2 rounded border border-black"
+              }
+              activeClassName={"bg-gray-500 text-white p-2 rounded"}
+              disabledClassName={"text-black cursor-not-allowed"}
+            />
           </div>
         </div>
       </div>
+      <OrderDetailsModal
+        open={open}
+        handleClose={handleClose}
+        order={selectedOrder}
+      />
     </div>
   );
 }
