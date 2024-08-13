@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   HomeIcon,
   ShoppingBagIcon,
@@ -6,13 +6,16 @@ import {
   UserIcon,
   ArchiveBoxIcon,
   ShoppingCartIcon,
+  ArrowLeftEndOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import { Link, useLocation } from "react-router-dom";
 import { AiFillProduct } from "react-icons/ai";
+import { AuthContext } from "../../context/AuthContext";
 
 function Sidebar() {
   const location = useLocation();
   const currentUrl = location.pathname;
+  const { logout } = useContext(AuthContext);
 
   const getLinkClasses = (path) => {
     const isActive = currentUrl === path || currentUrl.startsWith(path);
@@ -65,6 +68,18 @@ function Sidebar() {
                 <span>Users</span>
               </Link>
             </nav>
+          </div>
+          {/* Logout button added here */}
+          <div className="mb-6">
+            <div
+              className={
+                "flex items-center px-6 py-2 m-4 text-sm font-medium text-white hover:bg-red-800 rounded-md bg-red-700"
+              }
+              onClick={logout}
+            >
+              <ArrowLeftEndOnRectangleIcon className="w-6 h-6 mr-3" />
+              <span>Log Out</span>
+            </div>
           </div>
         </div>
       </div>
