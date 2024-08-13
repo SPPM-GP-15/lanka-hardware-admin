@@ -11,7 +11,7 @@ const form = {
   newCategory: "",
   stock: "",
   manufacturer: "",
-  selectedFiles: [],
+  imageUrl: "",
 };
 export default function PostProduct() {
   const [formData, setFormData] = useState(form);
@@ -21,20 +21,6 @@ export default function PostProduct() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [categories, setCategories] = useState([]);
-
-  const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    const totalFiles = formData.selectedFiles.length + files.length;
-
-    if (totalFiles > 3) {
-      alert("You can only upload a maximum of 3 files");
-      return;
-    }
-    setFormData({
-      ...formData,
-      selectedFiles: [...formData.selectedFiles, ...files],
-    });
-  };
 
   useEffect(() => {
     const fetchCatergories = async () => {
@@ -52,25 +38,6 @@ export default function PostProduct() {
     };
     fetchCatergories();
   }, []);
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const files = Array.from(e.dataTransfer.files);
-    const totalFiles = formData.selectedFiles.length + files.length;
-
-    if (totalFiles > 3) {
-      alert("You can only upload a maximum of 3 files");
-      return;
-    }
-    setFormData({
-      ...formData,
-      selectedFiles: [...formData.selectedFiles, ...files],
-    });
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -109,9 +76,7 @@ export default function PostProduct() {
       tempErrors.stock = "Stock must be a positive number";
     if (!formData.manufacturer)
       tempErrors.manufacturer = "Manufacturer is required";
-    if (formData.selectedFiles.length === 0)
-      tempErrors.selectedFiles = "At least one image is required";
-
+    if (!formData.imageUrl) tempErrors.imageUrl = "Image URL is required";
     return tempErrors;
   };
 
@@ -133,7 +98,7 @@ export default function PostProduct() {
         newPrice: formData.price,
         category: catergoryID,
         stock: formData.stock,
-        imageUrl: "https://i.redd.it/azb5a2h0jar21.png",
+        imageUrl: formData.imageUrl,
         manufacturer: formData.manufacturer,
       };
 
@@ -155,7 +120,7 @@ export default function PostProduct() {
         newPrice: formData.price,
         category: response.data._id,
         stock: formData.stock,
-        imageUrl: "https://i.redd.it/azb5a2h0jar21.png",
+        imageUrl: formData.imageUrl,
         manufacturer: formData.manufacturer,
       };
       postInDB(data);
@@ -385,68 +350,25 @@ export default function PostProduct() {
                 </div>
                 <div className="flex justify-between items-center border-b pb-5">
                   <div className="w-1/2">
-                    <p className="text-md font-bold">Images</p>
+                    <p className="text-md font-bold">Image URL</p>
                     <p className="text-sm mt-2 text-gray-500 w-2/3">
-                      Chose up to 3 images of the product.
+                      Provide an Umage URL for the product.
                     </p>
                   </div>
                   <div className="w-1/2">
-                    <div
-                      className="flex items-center justify-center w-full"
-                      onDrop={handleDrop}
-                      onDragOver={handleDragOver}
-                    >
-                      <label
-                        htmlFor="dropzone-file"
-                        className="flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 "
-                      >
-                        {formData.selectedFiles.length > 0 ? (
-                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <h3 className="text-lg font-semibold text-gray-700 ">
-                              Selected Files
-                            </h3>
-                            <ul>
-                              {formData.selectedFiles.map((file, index) => (
-                                <li
-                                  key={index}
-                                  className="text-sm text-gray-500 "
-                                >
-                                  {file.name}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <IoCloudUpload className="w-8 h-8 mb-4 text-gray-500  " />
-
-                            <p className="mb-2 text-sm text-gray-500">
-                              <span className="font-semibold">
-                                Click to upload
-                              </span>{" "}
-                              or drag and drop
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              SVG, PNG, JPG or GIF (MAX. 800x400px)
-                            </p>
-                          </div>
-                        )}
-                        <div className="flex flex-col"></div>
-                        {errors.selectedFiles && (
-                          <p className="text-red-500 text-sm">
-                            {errors.selectedFiles}
-                          </p>
-                        )}
-                        <input
-                          id="dropzone-file"
-                          type="file"
-                          className="hidden"
-                          accept="image/svg+xml,image/png,image/jpeg,image/gif"
-                          multiple
-                          onChange={handleFileChange}
-                        />
-                      </label>
-                    </div>
+                    <textarea
+                      rows={4}
+                      name="imageUrl"
+                      value={formData.imageUrl}
+                      onChange={handleChange}
+                      className={`mt-1 block w-full px-3 py-2 border ${
+                        errors.imageUrl ? "border-red-500" : "border-gray-300"
+                      } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                      placeholder="imageUrl"
+                    />
+                    {errors.imageUrl && (
+                      <p className="text-red-500 text-sm">{errors.imageUrl}</p>
+                    )}
                   </div>
                 </div>
               </div>

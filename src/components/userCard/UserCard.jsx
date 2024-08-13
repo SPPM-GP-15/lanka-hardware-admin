@@ -36,7 +36,7 @@ function UserCard({ user, onRemove, onBlock }) {
           <div>
             <p className="flex justify-end text-xs text-gray-800">
               {user.address
-                ? user.address.addressLine + user.address.city
+                ? user.address.addressLine + ", " + user.address.city
                 : "No address added"}
             </p>
           </div>
