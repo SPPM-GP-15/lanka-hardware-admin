@@ -32,7 +32,7 @@ function RecentProducts() {
           <div className="relative w-full px-4 py-6 bg-white shadow-lg  rounded-xl">
             <div className="flex items-center justify-between  sm:space-x-12 ">
               <div className="text-2xl font-bold text-gray-700 mb-4 ml-2">
-                Recently Updated Products
+                Recently Added Products
               </div>
               <Link
                 to="/products"
