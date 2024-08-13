@@ -23,7 +23,7 @@ import { AuthContext } from "./context/AuthContext";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Initial />}>
-      <Route path="dashboard" element={<Dashboard />} />
+      <Route path="dashboard" index element={<Dashboard />} />
       <Route path="orders" element={<Orders />}>
         <Route path="all" element={<All />} />
         <Route path="new" element={<New />} />
@@ -34,6 +34,7 @@ const router = createBrowserRouter(
       <Route path="products" element={<Products />} />
       <Route path="users" element={<Users />} />
       <Route path="post-product" element={<PostProducts />} />
+
       <Route path="*" element={<NotFound />} />
     </Route>
   )

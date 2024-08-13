@@ -8,14 +8,20 @@ import {
   ShoppingCartIcon,
   ArrowLeftEndOnRectangleIcon,
 } from "@heroicons/react/24/outline";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiFillProduct } from "react-icons/ai";
 import { AuthContext } from "../../context/AuthContext";
 
 function Sidebar() {
   const location = useLocation();
   const currentUrl = location.pathname;
-  const { logout } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    navigate("/");
+  };
 
   const getLinkClasses = (path) => {
     const isActive = currentUrl === path || currentUrl.startsWith(path);
@@ -73,7 +79,7 @@ function Sidebar() {
           <div className="mb-6">
             <div
               className={
-                "flex items-center px-6 py-2 m-4 text-sm font-medium text-white hover:bg-red-800 rounded-md bg-red-700"
+                "flex items-center px-6 py-2 m-4 text-sm font-medium text-white hover:bg-red-00 rounded-md bg-red-700"
               }
               onClick={logout}
             >
