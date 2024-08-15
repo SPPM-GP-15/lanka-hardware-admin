@@ -119,20 +119,24 @@ const OrderDetailsModal = ({ open, handleClose, order }) => {
               <tbody>
                 {order.items.map((item) => (
                   <tr key={item._id} className="hover:bg-gray-100">
-                    <td className="border border-gray-300 p-2 text-center">
-                      {item.product.name}
-                    </td>
-                    <td className="border border-gray-300 p-2 text-center">
-                      {`Rs. ${item.product.newPrice.toFixed(2)}`}
-                    </td>
-                    <td className="border border-gray-300 p-2 text-center">
-                      {item.quantity}
-                    </td>
-                    <td className="border border-gray-300 p-2 text-center">
-                      {`Rs. ${(item.product.newPrice * item.quantity).toFixed(
-                        2
-                      )}`}
-                    </td>
+                    {item.product && (
+                      <>
+                        <td className="border border-gray-300 p-2 text-center">
+                          {item.product.name}
+                        </td>
+                        <td className="border border-gray-300 p-2 text-center">
+                          {`Rs. ${item.product.newPrice.toFixed(2)}`}
+                        </td>
+                        <td className="border border-gray-300 p-2 text-center">
+                          {item.quantity}
+                        </td>
+                        <td className="border border-gray-300 p-2 text-center">
+                          {`Rs. ${(
+                            item.product.newPrice * item.quantity
+                          ).toFixed(2)}`}
+                        </td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>
